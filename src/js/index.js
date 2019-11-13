@@ -183,6 +183,10 @@ class TrezorConnect {
         return await call({ method: 'nemSignTransaction', ...params });
     }
 
+    static nem2SignTransaction: $T.NEM2SignTransaction = async (params) => {
+        return await call({ method: 'nem2SignTransaction', ...params });
+    }
+
     static pushTransaction: $T.PushTransaction = async (params) => {
         return await call({ method: 'pushTransaction', ...params });
     }

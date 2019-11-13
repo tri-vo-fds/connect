@@ -353,6 +353,11 @@ export default class DeviceCommands {
         return response.message;
     }
 
+    async nem2SignTx(transaction: trezor.NEM2SignTxMessage): Promise<trezor.NEM2SignedTx> {
+        const response: MessageResponse<trezor.NEM2SignedTx> = await this.typedCall('NEM2SignTx', 'NEM2SignedTx', transaction);
+        return response.message;
+    }
+
     // Ripple: begin
     async rippleGetAddress(address_n: Array<number>, showOnTrezor: boolean): Promise<trezor.RippleAddress> {
         const response: MessageResponse<trezor.RippleAddress> = await this.typedCall('RippleGetAddress', 'RippleAddress', {

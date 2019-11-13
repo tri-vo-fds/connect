@@ -41,6 +41,7 @@ import RippleGetAddress from './RippleGetAddress';
 import RippleSignTransaction from './RippleSignTransaction';
 import NEMGetAddress from './NEMGetAddress';
 import NEMSignTransaction from './NEMSignTransaction';
+import NEM2SignTransaction from './NEM2SignTransaction';
 import SignMessage from './SignMessage';
 import SignTransaction from './SignTransaction';
 import StellarGetAddress from './StellarGetAddress';
@@ -100,6 +101,7 @@ const classes: {[k: string]: any} = {
     'rippleSignTransaction': RippleSignTransaction,
     'nemGetAddress': NEMGetAddress,
     'nemSignTransaction': NEMSignTransaction,
+    'nem2SignTransaction': NEM2SignTransaction,
     'signMessage': SignMessage,
     'signTransaction': SignTransaction,
     'stellarGetAddress': StellarGetAddress,

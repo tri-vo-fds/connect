@@ -399,6 +399,43 @@ export type NEMSignTxMessage = {
     importance_transfer?: NEMImportanceTransfer,
 }
 
+// NEM2 types
+
+// TODO: public key
+
+export type NEM2TransactionCommon = {
+    type: ?Array<number>,
+    networkType: ?number,
+    version: ?number,
+    maxFee: ?string, // uint64
+    deadline: ?string, // uint64
+    signer: ?string,
+    signature: ?string,
+}
+
+export type NEM2Mosaic = {
+    namespace: ?string,
+    mosaic: ?string,
+    quantity: ?number,
+}
+
+export type NEM2Address = {
+    address: String,
+    networkType: NetworkType,
+}
+
+type NEM2Message = {
+    payload: string,
+    type: number,
+}
+
+export type NEM2Transfer = {
+    recipientAddress: NEM2Address,
+    mosaics: ?Array<NEM2Mosaic>,
+    message: ?NEM2Message,
+}
+
+
 // Stellar types
 
 export type StellarAddress = {
