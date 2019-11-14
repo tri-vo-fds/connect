@@ -12,8 +12,8 @@ type Message = {
 }
 
 export type Mosaic = {
-    id: string,
-    quantity: number,
+    id: string, // uint64
+    amount: string, // uint64
 }
 
 export type NetworkType =

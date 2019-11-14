@@ -5,7 +5,7 @@ import AbstractMethod from './AbstractMethod';
 import { validateParams, getFirmwareRange } from './helpers/paramsValidator';
 import { getMiscNetwork } from '../../data/CoinInfo';
 import { validatePath } from '../../utils/pathUtils';
-import * as helper from './helpers/nemSignTx';
+import * as helper from './helpers/nem2SignTx';
 
 import type { NEM2SignTxMessage, NEM2SignedTx } from '../../types/trezor';
 import type { Transaction as $NEM2Transaction } from '../../types/nem2';
@@ -29,7 +29,7 @@ export default class NEM2SignTransaction extends AbstractMethod {
         ]);
 
         const path = validatePath(payload.path, 3);
-        // incoming data should be in nem-sdk format
+        // incoming data should be in nem2-sdk format
         const transaction: $NEM2Transaction = payload.transaction;
         this.message = helper.createTx(transaction, path);
     }

@@ -2,8 +2,8 @@
 'use strict';
 
 import type {
-    NEMTransactionCommon,
-    NEMTransfer,
+    NEM2TransactionCommon,
+    NEM2Transfer,
 } from '../../../types/trezor';
 
 import type {
@@ -27,47 +27,39 @@ export const TX_TYPES = {
     'transfer': NEM_TRANSFER,
 };
 
-const getCommon = (tx: $NEM2Transaction, address_n?: Array<number>): NEMTransactionCommon => {
+const getCommon = (tx: $NEM2Transaction): NEMTransactionCommon => {
     return {
-        address_n,
-        network: (tx.version >> 24) & 0xFF,
-        timestamp: tx.timeStamp,
-        fee: tx.fee,
+        type: tx.type,
+        network_type: tx.networkType,
+        version: tx.version,
+        max_fee: tx.maxFee,
         deadline: tx.deadline,
-        signer: address_n ? undefined : tx.signer,
+        signer: tx.signer || undefined,
     };
 };
 
 const transferMessage = (tx: $NEM2Transaction): NEMTransfer => {
     const mosaics: ?Array<NEMMosaic> = tx.mosaics ? tx.mosaics.map((mosaic: $NEM2Mosaic) => ({
-        namespace: mosaic.mosaicId.namespaceId,
-        mosaic: mosaic.mosaicId.name,
-        quantity: mosaic.quantity,
+        id: mosaic.id,
+        amount: mosaic.amount,
     })) : undefined;
 
     return {
-        recipient: tx.recipient,
-        amount: tx.amount,
-        payload: tx.message.payload || undefined,
-        public_key: tx.message.type === 0x02 ? tx.message.publicKey : undefined,
+        recipient_address: tx.recipientAddress.address,
+        message: tx.message || undefined,
         mosaics,
     };
 };
 
 export const createTx = (tx: $NEM2Transaction, address_n: Array<number>): NEMSignTxMessage => {
-    let transaction: $NEM2Transaction = tx;
+    const transaction: $NEM2Transaction = tx;
     const message: NEMSignTxMessage = {
-        transaction: getCommon(tx, address_n),
+        address_n: address_n,
+        transaction: getCommon(tx),
     };
 
-    message.cosigning = (tx.type === 0x1002);
-    if (message.cosigning || tx.type === 0x1004) {
-        transaction = tx.otherTrans;
-        message.multisig = getCommon(transaction);
-    }
-
     switch (transaction.type) {
-        case 0x0101:
+        case 0x4154:
             message.transfer = transferMessage(transaction);
             break;
 
@@ -92,7 +84,7 @@ export const createTx = (tx: $NEM2Transaction, address_n: Array<number>): NEMSig
             //     break;
 
         default:
-            throw new Error('Unknown transaction type');
+            throw new Error(`Unknown transaction type: ${transaction.type}`);
     }
 
     return message;
