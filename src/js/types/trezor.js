@@ -435,6 +435,19 @@ export type NEM2Transfer = {
     message: ?NEM2Message,
 }
 
+export type NEM2MosaicDefinition = {
+    nonce: ?number,
+    mosaic_id: ?string,
+    flags: ?number,
+    divisibility: ?number,
+    duration: ?string,
+}
+
+// export type NEM2SignedTx = {
+//     payload: ?string,
+//     hash: ?string,
+//     signature: ?string,
+// }
 
 // Stellar types
 

@@ -32,7 +32,7 @@ export type Transaction = {
     networkType: NetworkType,
     version: number,
     maxFee: string, // uint64
-    deadline: number, // uint64
+    deadline: string, // uint64
     signer: ?string,
     signature: ?string,
 
@@ -41,6 +41,12 @@ export type Transaction = {
     mosaics: Array<Mosaic>,
     message: Message,
 
+    // Mosaic Definition Fields
+    nonce: ?number,
+    mosaicId: ?string,
+    flags: ?number,
+    divisibility: ?number,
+    duration: ?string,
 }
 
 // get public key
@@ -62,3 +68,4 @@ export type NEM2SignTransaction$ = {
     success: true,
     payload: NEM2SignedTx,
 } | Unsuccessful$;
+

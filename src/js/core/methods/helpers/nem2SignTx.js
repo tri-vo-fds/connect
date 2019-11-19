@@ -4,6 +4,7 @@
 import type {
     NEM2TransactionCommon,
     NEM2Transfer,
+    NEM2MosaicDefinition,
 } from '../../../types/trezor';
 
 import type {
@@ -33,8 +34,7 @@ const getCommon = (tx: $NEM2Transaction): NEMTransactionCommon => {
         network_type: tx.networkType,
         version: tx.version,
         max_fee: tx.maxFee,
-        deadline: tx.deadline,
-        signer: tx.signer || undefined,
+        deadline: tx.deadline,        
     };
 };
 
@@ -51,10 +51,21 @@ const transferMessage = (tx: $NEM2Transaction): NEMTransfer => {
     };
 };
 
+const mosaicDefinitionMessage = (tx: $NEM2Transaction): NEM2MosaicDefinition => {
+    return {
+        nonce: tx.nonce,
+        mosaic_id: tx.mosaicId,
+        flags: tx.flags,
+        divisibility: tx.divisibility,
+        duration: tx.duration
+    }
+};
+
 export const createTx = (tx: $NEM2Transaction, address_n: Array<number>): NEMSignTxMessage => {
-    const transaction: $NEM2Transaction = tx;
+    const transaction: $NEM2Transaction = tx;    
     const message: NEMSignTxMessage = {
         address_n: address_n,
+        generation_hash: tx.generationHash,
         transaction: getCommon(tx),
     };
 
@@ -62,7 +73,9 @@ export const createTx = (tx: $NEM2Transaction, address_n: Array<number>): NEMSig
         case 0x4154:
             message.transfer = transferMessage(transaction);
             break;
-
+        case 0x414D:
+            message.mosaic_definition = mosaicDefinitionMessage(transaction);
+            break;
             // case 0x0801:
             //     message.importance_transfer = importanceTransferMessage(transaction);
             //     break;
