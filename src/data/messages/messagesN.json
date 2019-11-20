@@ -10129,6 +10129,22 @@
                 {
                     "name": "MessageType_WebAuthnRemoveResidentCredential",
                     "id": 803
+                },
+                {
+                    "name": "MessageType_NEM2GetPublicKey",
+                    "id": 804
+                },
+                {
+                    "name": "MessageType_NEM2PublicKey",
+                    "id": 805
+                },
+                {
+                    "name": "MessageType_NEM2SignTx",
+                    "id": 806
+                },
+                {
+                    "name": "MessageType_NEM2SignedTx",
+                    "id": 807
                 }
             ],
             "options": {}
