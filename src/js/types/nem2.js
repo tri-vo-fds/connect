@@ -29,7 +29,7 @@ export type NEM2Address = {
 
 export type Transaction = {
     type: number,
-    networkType: NetworkType,
+    network: NetworkType,
     version: number,
     maxFee: string, // uint64
     deadline: string, // uint64

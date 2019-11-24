@@ -29,9 +29,10 @@ export default class NEM2SignTransaction extends AbstractMethod {
         ]);
 
         const path = validatePath(payload.path, 3);
+        const generationHash = payload.generationHash;
         // incoming data should be in nem2-sdk format
         const transaction: $NEM2Transaction = payload.transaction;
-        this.message = helper.createTx(transaction, path);
+        this.message = helper.createTx(transaction, path, generationHash);
     }
 
     async run(): Promise<NEM2SignedTx> {

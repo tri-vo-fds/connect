@@ -31,10 +31,10 @@ export const TX_TYPES = {
 const getCommon = (tx: $NEM2Transaction): NEMTransactionCommon => {
     return {
         type: tx.type,
-        network_type: tx.networkType,
+        network_type: tx.network,
         version: tx.version,
         max_fee: tx.maxFee,
-        deadline: tx.deadline,        
+        deadline: tx.deadline,
     };
 };
 
@@ -57,15 +57,15 @@ const mosaicDefinitionMessage = (tx: $NEM2Transaction): NEM2MosaicDefinition => 
         mosaic_id: tx.mosaicId,
         flags: tx.flags,
         divisibility: tx.divisibility,
-        duration: tx.duration
-    }
+        duration: tx.duration,
+    };
 };
 
-export const createTx = (tx: $NEM2Transaction, address_n: Array<number>): NEMSignTxMessage => {
-    const transaction: $NEM2Transaction = tx;    
+export const createTx = (tx: $NEM2Transaction, address_n: Array<number>, generation_hash: string): NEMSignTxMessage => {
+    const transaction: $NEM2Transaction = tx;
     const message: NEMSignTxMessage = {
         address_n: address_n,
-        generation_hash: tx.generationHash,
+        generation_hash: generation_hash,
         transaction: getCommon(tx),
     };
 

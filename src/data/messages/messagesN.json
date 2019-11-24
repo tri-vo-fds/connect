@@ -1711,6 +1711,13 @@
                     "type": "ButtonRequestType",
                     "name": "code",
                     "id": 1
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "string",
+                    "name": "data",
+                    "id": 2
                 }
             ],
             "enums": [
@@ -2332,27 +2339,6 @@
                     "type": "string",
                     "name": "input",
                     "id": 3
-                },
-                {
-                    "rule": "optional",
-                    "options": {},
-                    "type": "uint32",
-                    "name": "x",
-                    "id": 4
-                },
-                {
-                    "rule": "optional",
-                    "options": {},
-                    "type": "uint32",
-                    "name": "y",
-                    "id": 5
-                },
-                {
-                    "rule": "optional",
-                    "options": {},
-                    "type": "bool",
-                    "name": "wait",
-                    "id": 6
                 }
             ],
             "enums": [
@@ -2384,22 +2370,6 @@
             "oneofs": {}
         },
         {
-            "name": "DebugLinkLayout",
-            "fields": [
-                {
-                    "rule": "repeated",
-                    "options": {},
-                    "type": "string",
-                    "name": "lines",
-                    "id": 1
-                }
-            ],
-            "enums": [],
-            "messages": [],
-            "options": {},
-            "oneofs": {}
-        },
-        {
             "name": "DebugLinkGetState",
             "fields": [
                 {
@@ -2415,13 +2385,6 @@
                     "type": "bool",
                     "name": "wait_word_pos",
                     "id": 2
-                },
-                {
-                    "rule": "optional",
-                    "options": {},
-                    "type": "bool",
-                    "name": "wait_layout",
-                    "id": 3
                 }
             ],
             "enums": [],
@@ -2515,13 +2478,6 @@
                     "type": "uint32",
                     "name": "mnemonic_type",
                     "id": 12
-                },
-                {
-                    "rule": "repeated",
-                    "options": {},
-                    "type": "string",
-                    "name": "layout_lines",
-                    "id": 13
                 }
             ],
             "enums": [],
@@ -4524,20 +4480,6 @@
                     "type": "BackupType",
                     "name": "backup_type",
                     "id": 31
-                },
-                {
-                    "rule": "optional",
-                    "options": {},
-                    "type": "bool",
-                    "name": "sd_card_present",
-                    "id": 32
-                },
-                {
-                    "rule": "optional",
-                    "options": {},
-                    "type": "bool",
-                    "name": "sd_protection",
-                    "id": 33
                 }
             ],
             "enums": [
@@ -8730,9 +8672,9 @@
                         {
                             "rule": "optional",
                             "options": {},
-                            "type": "bytes",
+                            "type": "TezosContractID",
                             "name": "source",
-                            "id": 7
+                            "id": 1
                         },
                         {
                             "rule": "optional",
@@ -8781,9 +8723,9 @@
                         {
                             "rule": "optional",
                             "options": {},
-                            "type": "bytes",
+                            "type": "TezosContractID",
                             "name": "source",
-                            "id": 9
+                            "id": 1
                         },
                         {
                             "rule": "optional",
@@ -8833,72 +8775,10 @@
                             "type": "bytes",
                             "name": "parameters",
                             "id": 8
-                        },
-                        {
-                            "rule": "optional",
-                            "options": {},
-                            "type": "TezosParametersManager",
-                            "name": "parameters_manager",
-                            "id": 10
                         }
                     ],
                     "enums": [],
-                    "messages": [
-                        {
-                            "name": "TezosParametersManager",
-                            "fields": [
-                                {
-                                    "rule": "optional",
-                                    "options": {},
-                                    "type": "bytes",
-                                    "name": "set_delegate",
-                                    "id": 1
-                                },
-                                {
-                                    "rule": "optional",
-                                    "options": {},
-                                    "type": "bool",
-                                    "name": "cancel_delegate",
-                                    "id": 2
-                                },
-                                {
-                                    "rule": "optional",
-                                    "options": {},
-                                    "type": "TezosManagerTransfer",
-                                    "name": "transfer",
-                                    "id": 3
-                                }
-                            ],
-                            "enums": [],
-                            "messages": [
-                                {
-                                    "name": "TezosManagerTransfer",
-                                    "fields": [
-                                        {
-                                            "rule": "optional",
-                                            "options": {},
-                                            "type": "TezosContractID",
-                                            "name": "destination",
-                                            "id": 1
-                                        },
-                                        {
-                                            "rule": "optional",
-                                            "options": {},
-                                            "type": "uint64",
-                                            "name": "amount",
-                                            "id": 2
-                                        }
-                                    ],
-                                    "enums": [],
-                                    "messages": [],
-                                    "options": {},
-                                    "oneofs": {}
-                                }
-                            ],
-                            "options": {},
-                            "oneofs": {}
-                        }
-                    ],
+                    "messages": [],
                     "options": {},
                     "oneofs": {}
                 },
@@ -8908,9 +8788,9 @@
                         {
                             "rule": "optional",
                             "options": {},
-                            "type": "bytes",
+                            "type": "TezosContractID",
                             "name": "source",
-                            "id": 12
+                            "id": 1
                         },
                         {
                             "rule": "optional",
@@ -8994,9 +8874,9 @@
                         {
                             "rule": "optional",
                             "options": {},
-                            "type": "bytes",
+                            "type": "TezosContractID",
                             "name": "source",
-                            "id": 7
+                            "id": 1
                         },
                         {
                             "rule": "optional",
@@ -9657,10 +9537,6 @@
                 {
                     "name": "MessageType_DebugLinkFlashErase",
                     "id": 113
-                },
-                {
-                    "name": "MessageType_DebugLinkLayout",
-                    "id": 9001
                 },
                 {
                     "name": "MessageType_EthereumGetPublicKey",
