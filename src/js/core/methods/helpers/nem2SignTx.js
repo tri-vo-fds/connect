@@ -12,20 +12,20 @@ import type {
     Mosaic as $NEM2Mosaic,
 } from '../../../types/nem2';
 
-export const NEM_MAINNET: number = 0x68;
-export const NEM_TESTNET: number = 0x98;
-export const NEM_MIJIN: number = 0x60;
+export const NEM2_MAINNET: number = 0x68;
+export const NEM2_TESTNET: number = 0x98;
+export const NEM2_MIJIN: number = 0x60;
 
 export const NETWORKS = {
-    'mainnet': NEM_MAINNET,
-    'testnet': NEM_TESTNET,
-    'mijin': NEM_MIJIN,
+    'mainnet': NEM2_MAINNET,
+    'testnet': NEM2_TESTNET,
+    'mijin': NEM2_MIJIN,
 };
 
-export const NEM_TRANSFER: 0x0101 = 0x0101;
+export const NEM2_TRANSFER: number = 0x4154;
 
 export const TX_TYPES = {
-    'transfer': NEM_TRANSFER,
+    'transfer': NEM2_TRANSFER,
 };
 
 const getCommon = (tx: $NEM2Transaction): NEMTransactionCommon => {
@@ -39,13 +39,16 @@ const getCommon = (tx: $NEM2Transaction): NEMTransactionCommon => {
 };
 
 const transferMessage = (tx: $NEM2Transaction): NEMTransfer => {
-    const mosaics: ?Array<NEMMosaic> = tx.mosaics ? tx.mosaics.map((mosaic: $NEM2Mosaic) => ({
+    const mosaics: ?Array<NEM2Mosaic> = tx.mosaics ? tx.mosaics.map((mosaic: $NEM2Mosaic) => ({
         id: mosaic.id,
         amount: mosaic.amount,
     })) : undefined;
 
     return {
-        recipient_address: tx.recipientAddress.address,
+        recipient_address: tx.recipientAddress ? {
+            address: tx.recipientAddress.address,
+            network_type: tx.recipientAddress.networkType,
+        } : undefined,
         message: tx.message || undefined,
         mosaics,
     };
@@ -70,7 +73,7 @@ export const createTx = (tx: $NEM2Transaction, address_n: Array<number>, generat
     };
 
     switch (transaction.type) {
-        case 0x4154:
+        case NEM2_TRANSFER:
             message.transfer = transferMessage(transaction);
             break;
         case 0x414D:
