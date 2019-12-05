@@ -47,7 +47,14 @@ export type Transaction = {
     flags: ?number,
     divisibility: ?number,
     duration: ?string,
-}
+
+    // Namespace Registration
+    registrationType?: number,
+    namespaceName?: string,
+    id?: string,
+    parentId?: string,
+    duration?: string,
+ }
 
 // get public key
 

@@ -19,12 +19,13 @@ export default class NEM2SignTransaction extends AbstractMethod {
         super(message);
         this.requiredPermissions = ['read', 'write'];
         this.firmwareRange = getFirmwareRange(this.name, getMiscNetwork('NEM2'), this.firmwareRange);
-        this.info = 'Sign NEM2 transaction';
+        this.info = 'Sign NEM2 Transaction';
 
         const payload: Object = message.payload;
         // validate incoming parameters
         validateParams(payload, [
             { name: 'path', obligatory: true },
+            { name: 'generation_hash', obligatory: true },
             { name: 'transaction', obligatory: true },
         ]);
 
