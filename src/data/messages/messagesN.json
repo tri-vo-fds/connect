@@ -7429,6 +7429,20 @@
                     "type": "NEM2MosaicDefinitionTransaction",
                     "name": "mosaic_definition",
                     "id": 7
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "NEM2MosaicSupplyChangeTransaction",
+                    "name": "mosaic_supply",
+                    "id": 8
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "NEM2NamespaceRegistrationTransaction",
+                    "name": "namespace_registration",
+                    "id": 9
                 }
             ],
             "enums": [
@@ -7446,6 +7460,14 @@
                         {
                             "name": "MOSAIC_DEFINITION",
                             "id": 16717
+                        },
+                        {
+                            "name": "MOSAIC_SUPPLY_CHANGE",
+                            "id": 16973
+                        },
+                        {
+                            "name": "NAMESPACE_REGISTRATION",
+                            "id": 16718
                         }
                     ],
                     "options": {}
@@ -7468,6 +7490,20 @@
                         {
                             "name": "MIJIN_TEST",
                             "id": 144
+                        }
+                    ],
+                    "options": {}
+                },
+                {
+                    "name": "NEM2NamespaceRegistrationType",
+                    "values": [
+                        {
+                            "name": "ROOT",
+                            "id": 0
+                        },
+                        {
+                            "name": "CHILD",
+                            "id": 1
                         }
                     ],
                     "options": {}
@@ -7549,7 +7585,7 @@
                         {
                             "rule": "optional",
                             "options": {},
-                            "type": "string",
+                            "type": "NEM2RecipientAddress",
                             "name": "recipient_address",
                             "id": 1
                         },
@@ -7597,6 +7633,29 @@
                     "oneofs": {}
                 },
                 {
+                    "name": "NEM2RecipientAddress",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "address",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "uint32",
+                            "name": "network_type",
+                            "id": 2
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
                     "name": "NEM2MosaicDefinitionTransaction",
                     "fields": [
                         {
@@ -7633,6 +7692,89 @@
                             "type": "uint64",
                             "name": "duration",
                             "id": 5
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2MosaicSupplyChangeTransaction",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "mosaic_id",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "uint32",
+                            "name": "action",
+                            "id": 2
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "uint64",
+                            "name": "delta",
+                            "id": 3
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2NamespaceRegistrationTransaction",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "duration",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "parent_id",
+                            "id": 2
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "id",
+                            "id": 3
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {
+                                "default": "ROOT"
+                            },
+                            "type": "NEM2NamespaceRegistrationType",
+                            "name": "registration_type",
+                            "id": 4
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "uint32",
+                            "name": "name_size",
+                            "id": 5
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "namespace_name",
+                            "id": 6
                         }
                     ],
                     "enums": [],

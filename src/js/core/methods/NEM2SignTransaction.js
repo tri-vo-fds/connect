@@ -25,7 +25,7 @@ export default class NEM2SignTransaction extends AbstractMethod {
         // validate incoming parameters
         validateParams(payload, [
             { name: 'path', obligatory: true },
-            { name: 'generation_hash', obligatory: true },
+            { name: 'generationHash', obligatory: true },
             { name: 'transaction', obligatory: true },
         ]);
 
