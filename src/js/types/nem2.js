@@ -49,11 +49,16 @@ export type Transaction = {
     duration: ?string,
 
     // Namespace Registration
-    registrationType?: number,
-    namespaceName?: string,
-    id?: string,
+    registrationType: number,
+    namespaceName: string,
+    id: string,
     parentId?: string,
     duration?: string,
+
+    // Address Alias
+    namespaceId: string,
+    address: NEM2Address,
+    aliasAction: number,
  }
 
 // get public key

@@ -405,9 +405,9 @@ export type NEMSignTxMessage = {
 
 export type NEM2TransactionCommon = {
     type: ?Array<number>,
-    networkType: ?number,
+    network_type: ?number,
     version: ?number,
-    maxFee: ?string, // uint64
+    max_fee: ?string, // uint64
     deadline: ?string, // uint64
     signer: ?string,
     signature: ?string,
@@ -421,7 +421,7 @@ export type NEM2Mosaic = {
 
 export type NEM2Address = {
     address: String,
-    networkType: NetworkType,
+    network_type: NetworkType,
 }
 
 type NEM2Message = {
@@ -430,17 +430,31 @@ type NEM2Message = {
 }
 
 export type NEM2Transfer = {
-    recipientAddress: NEM2Address,
-    mosaics: ?Array<NEM2Mosaic>,
-    message: ?NEM2Message,
+    recipient_address: NEM2Address,
+    mosaics: Array<NEM2Mosaic>,
+    message: NEM2Message,
 }
 
 export type NEM2MosaicDefinition = {
-    nonce: ?number,
-    mosaic_id: ?string,
-    flags: ?number,
-    divisibility: ?number,
-    duration: ?string,
+    nonce: number,
+    mosaic_id: string,
+    flags: number,
+    divisibility: number,
+    duration: string,
+}
+
+export type NEM2NamespaceRegistration = {
+    id: string,
+    parent_id?: string,
+    duration?: ?string,
+    namespace_name: string,
+    registration_type: number,
+}
+
+export type NEM2AddressAlias = {
+    namespace_id: string,
+    alias_action: number,
+    address: NEM2Address,
 }
 
 // export type NEM2SignedTx = {
@@ -586,6 +600,12 @@ export type TezosRevealOp = {
     gas_limit: number,
     storage_limit: number,
     public_key: Uint8Array,
+};
+
+export type TezosParametersManager = {
+    set_delegate?: Uint8Array,
+    cancel_delegate?: boolean,
+    transfer?: TezosManagerTransfer,
 };
 
 export type TezosManagerTransfer = {

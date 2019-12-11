@@ -8,6 +8,8 @@ import type {
     NEM2TransactionCommon,
     NEM2Transfer,
     NEM2MosaicDefinition,
+    NEM2NamespaceRegistration,
+    NEM2AddressAlias,
 } from '../../../types/trezor';
 
 import type {
@@ -27,10 +29,12 @@ export const NETWORKS = {
 
 export const NEM2_TRANSFER: number = 0x4154;
 export const NEM2_NAMESPACE_REGISTRATION: number = 0x414E;
+export const NEM2_ADDRESS_ALIAS: number = 0x424E;
 
 export const TX_TYPES = {
     'transfer': NEM2_TRANSFER,
     'namespaceRegistration': NEM2_NAMESPACE_REGISTRATION,
+    'addressAlias': NEM2_ADDRESS_ALIAS,
 };
 
 const getCommon = (tx: $NEM2Transaction): NEMTransactionCommon => {
@@ -104,9 +108,28 @@ const namespaceRegistrationMessage = (tx: $NEM2Transaction): NEM2NamespaceRegist
         };
     }
 
-    invalidParameter('Invalid Registration Type');
+    throw invalidParameter('Invalid Registration Type');
+};
 
-    return fields;
+const addressAliasMessage = (tx: $NEM2Transaction): NEM2AddressAlias => {
+    validateParams(tx, [
+        { name: 'namespaceId', type: 'string', obligatory: true },
+        { name: 'aliasAction', type: 'number', obligatory: true },
+        { name: 'address', type: 'object', obligatory: true },
+    ]);
+
+    if (tx.aliasAction !== 0 && tx.aliasAction !== 1) {
+        throw invalidParameter('Invalid Alias Action');
+    }
+
+    return {
+        namespace_id: tx.namespaceId,
+        alias_action: tx.aliasAction,
+        address: {
+            address: tx.address.address,
+            network_type: tx.address.networkType,
+        },
+    };
 };
 
 export const createTx = (tx: $NEM2Transaction, address_n: Array<number>, generation_hash: string): NEMSignTxMessage => {
@@ -126,6 +149,9 @@ export const createTx = (tx: $NEM2Transaction, address_n: Array<number>, generat
             break;
         case NEM2_NAMESPACE_REGISTRATION:
             message.namespace_registration = namespaceRegistrationMessage(transaction);
+            break;
+        case NEM2_ADDRESS_ALIAS:
+            message.address_alias = addressAliasMessage(transaction);
             break;
             // case 0x0801:
             //     message.importance_transfer = importanceTransferMessage(transaction);

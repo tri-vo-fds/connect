@@ -7443,6 +7443,13 @@
                     "type": "NEM2NamespaceRegistrationTransaction",
                     "name": "namespace_registration",
                     "id": 9
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "NEM2AddressAliasTransaction",
+                    "name": "address_alias",
+                    "id": 10
                 }
             ],
             "enums": [
@@ -7468,6 +7475,10 @@
                         {
                             "name": "NAMESPACE_REGISTRATION",
                             "id": 16718
+                        },
+                        {
+                            "name": "ADDRESS_ALIAS",
+                            "id": 16974
                         }
                     ],
                     "options": {}
@@ -7504,6 +7515,20 @@
                         {
                             "name": "CHILD",
                             "id": 1
+                        }
+                    ],
+                    "options": {}
+                },
+                {
+                    "name": "NEM2AliasAction",
+                    "values": [
+                        {
+                            "name": "LINK",
+                            "id": 1
+                        },
+                        {
+                            "name": "UNLINK",
+                            "id": 0
                         }
                     ],
                     "options": {}
@@ -7585,7 +7610,7 @@
                         {
                             "rule": "optional",
                             "options": {},
-                            "type": "NEM2RecipientAddress",
+                            "type": "NEM2Address",
                             "name": "recipient_address",
                             "id": 1
                         },
@@ -7633,7 +7658,7 @@
                     "oneofs": {}
                 },
                 {
-                    "name": "NEM2RecipientAddress",
+                    "name": "NEM2Address",
                     "fields": [
                         {
                             "rule": "optional",
@@ -7775,6 +7800,38 @@
                             "type": "string",
                             "name": "namespace_name",
                             "id": 6
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2AddressAliasTransaction",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "namespace_id",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2Address",
+                            "name": "address",
+                            "id": 2
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {
+                                "default": "LINK"
+                            },
+                            "type": "NEM2AliasAction",
+                            "name": "alias_action",
+                            "id": 3
                         }
                     ],
                     "enums": [],
