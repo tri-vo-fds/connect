@@ -59,6 +59,14 @@ export type Transaction = {
     namespaceId: string,
     address: NEM2Address,
     aliasAction: number,
+
+    // Namespace Metadata
+    targetPublicKey: string,
+    scopedMetadataKey: string,
+    targetNamespaceId: string,
+    valueSizeDelta: number,
+    valueSize: number,
+    value: string,
  }
 
 // get public key

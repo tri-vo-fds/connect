@@ -457,6 +457,15 @@ export type NEM2AddressAlias = {
     address: NEM2Address,
 }
 
+export type NEM2NamespaceMetadata = {
+    target_public_key: string,
+    scoped_metadata_key: string,
+    target_namespace_id: string,
+    value_size_delta: number,
+    value_size: number,
+    value: string,
+}
+
 // export type NEM2SignedTx = {
 //     payload: ?string,
 //     hash: ?string,

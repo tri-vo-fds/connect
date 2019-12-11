@@ -10,6 +10,7 @@ import type {
     NEM2MosaicDefinition,
     NEM2NamespaceRegistration,
     NEM2AddressAlias,
+    NEM2NamespaceMetadata,
 } from '../../../types/trezor';
 
 import type {
@@ -30,14 +31,16 @@ export const NETWORKS = {
 export const NEM2_TRANSFER: number = 0x4154;
 export const NEM2_NAMESPACE_REGISTRATION: number = 0x414E;
 export const NEM2_ADDRESS_ALIAS: number = 0x424E;
+export const NEM2_NAMESPACE_METADATA: number = 0x4344;
 
 export const TX_TYPES = {
     'transfer': NEM2_TRANSFER,
     'namespaceRegistration': NEM2_NAMESPACE_REGISTRATION,
     'addressAlias': NEM2_ADDRESS_ALIAS,
+    'namespaceMetadata': NEM2_NAMESPACE_METADATA,
 };
 
-const getCommon = (tx: $NEM2Transaction): NEMTransactionCommon => {
+const getCommon = (tx: $NEM2Transaction): NEM2TransactionCommon => {
     // TODO: validate params
     return {
         type: tx.type,
@@ -48,7 +51,7 @@ const getCommon = (tx: $NEM2Transaction): NEMTransactionCommon => {
     };
 };
 
-const transferMessage = (tx: $NEM2Transaction): NEMTransfer => {
+const transferMessage = (tx: $NEM2Transaction): NEM2Transfer => {
     const mosaics: ?Array<NEM2Mosaic> = tx.mosaics ? tx.mosaics.map((mosaic: $NEM2Mosaic) => ({
         id: mosaic.id,
         amount: mosaic.amount,
@@ -132,6 +135,30 @@ const addressAliasMessage = (tx: $NEM2Transaction): NEM2AddressAlias => {
     };
 };
 
+const namespaceMetadataMessage = (tx: $NEM2Transaction): NEM2NamespaceMetadata => {
+    validateParams(tx, [
+        { name: 'targetPublicKey', type: 'string', obligatory: true },
+        { name: 'scopedMetadataKey', type: 'string', obligatory: true },
+        { name: 'targetNamespaceId', type: 'string', obligatory: true },
+        { name: 'valueSizeDelta', type: 'number', obligatory: true },
+        { name: 'valueSize', type: 'number', obligatory: true },
+        { name: 'value', type: 'string', obligatory: true },
+    ]);
+
+    if (tx.valueSize > 1024) {
+        throw invalidParameter('Invalid value size, value size cannot be greater than 1024');
+    }
+
+    return {
+        target_public_key: tx.targetPublicKey,
+        scoped_metadata_key: tx.scopedMetadataKey,
+        target_namespace_id: tx.targetNamespaceId,
+        value_size_delta: tx.valueSizeDelta,
+        value_size: tx.valueSize,
+        value: tx.value,
+    };
+};
+
 export const createTx = (tx: $NEM2Transaction, address_n: Array<number>, generation_hash: string): NEMSignTxMessage => {
     const transaction: $NEM2Transaction = tx;
     const message: NEMSignTxMessage = {
@@ -152,6 +179,9 @@ export const createTx = (tx: $NEM2Transaction, address_n: Array<number>, generat
             break;
         case NEM2_ADDRESS_ALIAS:
             message.address_alias = addressAliasMessage(transaction);
+            break;
+        case NEM2_NAMESPACE_METADATA:
+            message.namespace_metadata = namespaceMetadataMessage(transaction);
             break;
             // case 0x0801:
             //     message.importance_transfer = importanceTransferMessage(transaction);

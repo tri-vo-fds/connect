@@ -7450,6 +7450,20 @@
                     "type": "NEM2AddressAliasTransaction",
                     "name": "address_alias",
                     "id": 10
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "NEM2AggregateTransaction",
+                    "name": "aggregate",
+                    "id": 11
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "NEM2NamespaceMetadataTransaction",
+                    "name": "namespace_metadata",
+                    "id": 12
                 }
             ],
             "enums": [
@@ -7479,6 +7493,18 @@
                         {
                             "name": "ADDRESS_ALIAS",
                             "id": 16974
+                        },
+                        {
+                            "name": "AGGREGATE_BONDED",
+                            "id": 16961
+                        },
+                        {
+                            "name": "AGGREGATE_COMPLETE",
+                            "id": 16705
+                        },
+                        {
+                            "name": "NAMESPACE_METADATA",
+                            "id": 17220
                         }
                     ],
                     "options": {}
@@ -7597,6 +7623,45 @@
                             "type": "string",
                             "name": "deadline",
                             "id": 5
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2EmbeddedTransactionCommon",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2EntityType",
+                            "name": "type",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2NetworkType",
+                            "name": "network_type",
+                            "id": 2
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {
+                                "default": 1
+                            },
+                            "type": "uint32",
+                            "name": "version",
+                            "id": 3
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "public_key",
+                            "id": 4
                         }
                     ],
                     "enums": [],
@@ -7832,6 +7897,125 @@
                             "type": "NEM2AliasAction",
                             "name": "alias_action",
                             "id": 3
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2AggregateTransaction",
+                    "fields": [
+                        {
+                            "rule": "repeated",
+                            "options": {},
+                            "type": "NEM2InnerTransaction",
+                            "name": "inner_transactions",
+                            "id": 1
+                        },
+                        {
+                            "rule": "repeated",
+                            "options": {},
+                            "type": "NEM2Cosignature",
+                            "name": "cosignatures",
+                            "id": 2
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2InnerTransaction",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2EmbeddedTransactionCommon",
+                            "name": "common",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2TransferTransaction",
+                            "name": "transfer",
+                            "id": 2
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2MosaicDefinitionTransaction",
+                            "name": "mosaic_definition",
+                            "id": 3
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2MosaicSupplyChangeTransaction",
+                            "name": "mosaic_supply",
+                            "id": 4
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2Cosignature",
+                    "fields": [],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2NamespaceMetadataTransaction",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "target_public_key",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "scoped_metadata_key",
+                            "id": 2
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "target_namespace_id",
+                            "id": 3
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "uint32",
+                            "name": "value_size_delta",
+                            "id": 4
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "uint32",
+                            "name": "value_size",
+                            "id": 5
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "value",
+                            "id": 6
                         }
                     ],
                     "enums": [],
