@@ -466,6 +466,13 @@ export type NEM2NamespaceMetadata = {
     value: string,
 }
 
+export type NEM2MultisigModification = {
+    min_approval_delta: number,
+    min_removal_delta: number,
+    public_key_additions: string[],
+    public_key_deletions: string[],
+}
+
 // export type NEM2SignedTx = {
 //     payload: ?string,
 //     hash: ?string,

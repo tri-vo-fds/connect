@@ -67,7 +67,13 @@ export type Transaction = {
     valueSizeDelta: number,
     valueSize: number,
     value: string,
- }
+
+    // Multisig Modification
+    minApprovalDelta: number,
+    minRemovalDelta: number,
+    publicKeyAdditions: string[],
+    publicKeyDeletions: string[],
+}
 
 // get public key
 

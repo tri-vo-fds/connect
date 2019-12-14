@@ -7464,6 +7464,41 @@
                     "type": "NEM2NamespaceMetadataTransaction",
                     "name": "namespace_metadata",
                     "id": 12
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "NEM2MosaicAliasTransaction",
+                    "name": "mosaic_alias",
+                    "id": 13
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "NEM2HashLockTransaction",
+                    "name": "hash_lock",
+                    "id": 14
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "NEM2SecretLockTransaction",
+                    "name": "secret_lock",
+                    "id": 15
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "NEM2SecretProofTransaction",
+                    "name": "secret_proof",
+                    "id": 16
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "NEM2MultisigModificationTransaction",
+                    "name": "multisig_modification",
+                    "id": 17
                 }
             ],
             "enums": [
@@ -7505,6 +7540,26 @@
                         {
                             "name": "NAMESPACE_METADATA",
                             "id": 17220
+                        },
+                        {
+                            "name": "MOSAIC_ALIAS",
+                            "id": 17230
+                        },
+                        {
+                            "name": "HASH_LOCK",
+                            "id": 16712
+                        },
+                        {
+                            "name": "SECRET_LOCK",
+                            "id": 16722
+                        },
+                        {
+                            "name": "SECRET_PROOF",
+                            "id": 16978
+                        },
+                        {
+                            "name": "MULTISIG_MODIFICATION",
+                            "id": 16725
                         }
                     ],
                     "options": {}
@@ -7555,6 +7610,42 @@
                         {
                             "name": "UNLINK",
                             "id": 0
+                        }
+                    ],
+                    "options": {}
+                },
+                {
+                    "name": "NEM2MosaicSupplyChangeAction",
+                    "values": [
+                        {
+                            "name": "INCREASE",
+                            "id": 1
+                        },
+                        {
+                            "name": "DECREASE",
+                            "id": 0
+                        }
+                    ],
+                    "options": {}
+                },
+                {
+                    "name": "NEM2LockHashAlgorithm",
+                    "values": [
+                        {
+                            "name": "SHA3_256",
+                            "id": 0
+                        },
+                        {
+                            "name": "KECCAK_256",
+                            "id": 1
+                        },
+                        {
+                            "name": "HASH_160",
+                            "id": 2
+                        },
+                        {
+                            "name": "HASH_256",
+                            "id": 3
                         }
                     ],
                     "options": {}
@@ -7801,8 +7892,10 @@
                         },
                         {
                             "rule": "optional",
-                            "options": {},
-                            "type": "uint32",
+                            "options": {
+                                "default": "INCREASE"
+                            },
+                            "type": "NEM2MosaicSupplyChangeAction",
                             "name": "action",
                             "id": 2
                         },
@@ -7905,6 +7998,153 @@
                     "oneofs": {}
                 },
                 {
+                    "name": "NEM2MosaicAliasTransaction",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {
+                                "default": "LINK"
+                            },
+                            "type": "NEM2AliasAction",
+                            "name": "alias_action",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "namespace_id",
+                            "id": 2
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "mosaic_id",
+                            "id": 3
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2HashLockTransaction",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2Mosaic",
+                            "name": "mosaic",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "uint64",
+                            "name": "duration",
+                            "id": 2
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "hash",
+                            "id": 3
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2SecretLockTransaction",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "secret",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2Mosaic",
+                            "name": "mosaic",
+                            "id": 2
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "uint64",
+                            "name": "duration",
+                            "id": 3
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {
+                                "default": "SHA3_256"
+                            },
+                            "type": "NEM2LockHashAlgorithm",
+                            "name": "hash_algorithm",
+                            "id": 4
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2Address",
+                            "name": "recipient_address",
+                            "id": 5
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2SecretProofTransaction",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "secret",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {
+                                "default": "SHA3_256"
+                            },
+                            "type": "NEM2LockHashAlgorithm",
+                            "name": "hash_algorithm",
+                            "id": 2
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2Address",
+                            "name": "recipient_address",
+                            "id": 3
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "proof",
+                            "id": 4
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
                     "name": "NEM2AggregateTransaction",
                     "fields": [
                         {
@@ -7957,6 +8197,48 @@
                             "type": "NEM2MosaicSupplyChangeTransaction",
                             "name": "mosaic_supply",
                             "id": 4
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2NamespaceRegistrationTransaction",
+                            "name": "namespace_registration",
+                            "id": 5
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2AddressAliasTransaction",
+                            "name": "address_alias",
+                            "id": 6
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2MosaicAliasTransaction",
+                            "name": "mosaic_alias",
+                            "id": 7
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2HashLockTransaction",
+                            "name": "hash_lock",
+                            "id": 8
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2SecretLockTransaction",
+                            "name": "secret_lock",
+                            "id": 9
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2SecretProofTransaction",
+                            "name": "secret_proof",
+                            "id": 10
                         }
                     ],
                     "enums": [],
@@ -8016,6 +8298,43 @@
                             "type": "string",
                             "name": "value",
                             "id": 6
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2MultisigModificationTransaction",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "uint32",
+                            "name": "min_approval_delta",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "uint32",
+                            "name": "min_removal_delta",
+                            "id": 2
+                        },
+                        {
+                            "rule": "repeated",
+                            "options": {},
+                            "type": "string",
+                            "name": "public_key_additions",
+                            "id": 3
+                        },
+                        {
+                            "rule": "repeated",
+                            "options": {},
+                            "type": "string",
+                            "name": "public_key_deletions",
+                            "id": 4
                         }
                     ],
                     "enums": [],

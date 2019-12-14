@@ -11,6 +11,7 @@ import type {
     NEM2NamespaceRegistration,
     NEM2AddressAlias,
     NEM2NamespaceMetadata,
+    NEM2MultisigModification,
 } from '../../../types/trezor';
 
 import type {
@@ -32,12 +33,14 @@ export const NEM2_TRANSFER: number = 0x4154;
 export const NEM2_NAMESPACE_REGISTRATION: number = 0x414E;
 export const NEM2_ADDRESS_ALIAS: number = 0x424E;
 export const NEM2_NAMESPACE_METADATA: number = 0x4344;
+export const NEM2_MULTISIG_MODIFICATION: number = 0x4155;
 
 export const TX_TYPES = {
     'transfer': NEM2_TRANSFER,
     'namespaceRegistration': NEM2_NAMESPACE_REGISTRATION,
     'addressAlias': NEM2_ADDRESS_ALIAS,
     'namespaceMetadata': NEM2_NAMESPACE_METADATA,
+    'multisigModification': NEM2_MULTISIG_MODIFICATION,
 };
 
 const getCommon = (tx: $NEM2Transaction): NEM2TransactionCommon => {
@@ -159,6 +162,15 @@ const namespaceMetadataMessage = (tx: $NEM2Transaction): NEM2NamespaceMetadata =
     };
 };
 
+const multisigModificationMessage = (tx: $NEM2Transaction): NEM2MultisigModification => {
+    return {
+        min_approval_delta: tx.minApprovalDelta || 0,
+        min_removal_delta: tx.minRemovalDelta || 0,
+        public_key_additions: tx.publicKeyAdditions || [],
+        public_key_deletions: tx.publicKeyDeletions || [],
+    };
+};
+
 export const createTx = (tx: $NEM2Transaction, address_n: Array<number>, generation_hash: string): NEMSignTxMessage => {
     const transaction: $NEM2Transaction = tx;
     const message: NEMSignTxMessage = {
@@ -183,9 +195,9 @@ export const createTx = (tx: $NEM2Transaction, address_n: Array<number>, generat
         case NEM2_NAMESPACE_METADATA:
             message.namespace_metadata = namespaceMetadataMessage(transaction);
             break;
-            // case 0x0801:
-            //     message.importance_transfer = importanceTransferMessage(transaction);
-            //     break;
+        case NEM2_MULTISIG_MODIFICATION:
+            message.multisig_modification = multisigModificationMessage(transaction);
+            break;
 
             // case 0x1001:
             //     message.aggregate_modification = aggregateModificationMessage(transaction);
