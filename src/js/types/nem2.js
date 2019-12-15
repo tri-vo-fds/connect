@@ -22,57 +22,150 @@ export type NetworkType =
   | 96 // MIJIN
   | 144 // MIJIN_TEST
 
+export type TransactionType =
+    0x4154 // Transfer
+  | 0x414D // MosaicDefinition
+  | 0x424D // MosaicSupplyChange
+  | 0x414E // NamespaceRegistration
+  | 0x424E // AddressAlias
+  | 0x434E // MosaicAlias
+  | 0x4344 // NamespaceMetadata
+  | 0x4244 // MosaicMetadata
+  | 0x4144 // AccountMetadata
+  | 0x4152 // SecretLock
+  | 0x4252 // SecretProof
+  | 0x4148 // HashLock
+  | 0x4141 // AggregateComplete
+  | 0x4241 // AggregateBonded
+
 export type NEM2Address = {
     address: String,
     networkType: NetworkType,
 }
 
-export type Transaction = {
-    type: number,
+export type TransactionBase = {
+    type: TransactionType,
     network: NetworkType,
     version: number,
-    maxFee: string, // uint64
-    deadline: string, // uint64
-    signer: ?string,
-    signature: ?string,
+    maxFee: string, // uint64 (optional so the Transaction type can be reused as an inner transaction)
+    deadline: string, // uint64 (optional so the Transaction type can be reused as an inner transaction)
+    signer?: string,
+    signature?: string,
 
-    // Transfer Transaction Fields
+    signerPublicKey: string, // used in inner transaction
+}
+
+export type Transaction = TransactionBase &
+                            Transfer &
+                            MosaicDefinition &
+                            MosaicSupply &
+                            NamespaceRegistration &
+                            AddressAlias &
+                            MosaicAlias &
+                            NamespaceMetadata &
+                            MosaicMetadata &
+                            AccountMetadata &
+                            SecretLock &
+                            SecretProof &
+                            HashLock &
+                            Aggregate;
+
+export type Transfer = {
     recipientAddress: NEM2Address,
     mosaics: Array<Mosaic>,
     message: Message,
+}
 
-    // Mosaic Definition Fields
-    nonce: ?number,
-    mosaicId: ?string,
-    flags: ?number,
-    divisibility: ?number,
-    duration: ?string,
+export type MosaicDefinition = {
+    nonce: number,
+    id: string,
+    flags: number,
+    divisibility: number,
+    duration: string,
+}
 
-    // Namespace Registration
+export type MosaicSupply = {
+    mosaicId: string,
+    action: number,
+    delta: string,
+}
+
+export type NamespaceRegistration = {
     registrationType: number,
     namespaceName: string,
     id: string,
     parentId?: string,
     duration?: string,
+}
 
-    // Address Alias
+export type AddressAlias = {
     namespaceId: string,
     address: NEM2Address,
     aliasAction: number,
+}
 
-    // Namespace Metadata
+export type MosaicAlias = {
+    namespaceId: string,
+    mosaicId: string,
+    aliasAction: number,
+}
+
+export type NamespaceMetadata = {
     targetPublicKey: string,
     scopedMetadataKey: string,
     targetNamespaceId: string,
     valueSizeDelta: number,
     valueSize: number,
     value: string,
+}
 
-    // Multisig Modification
-    minApprovalDelta: number,
-    minRemovalDelta: number,
-    publicKeyAdditions: string[],
-    publicKeyDeletions: string[],
+export type MosaicMetadata = {
+    targetPublicKey: string,
+    scopedMetadataKey: string,
+    targetMosaicId: string,
+    valueSizeDelta: number,
+    valueSize: number,
+    value: string,
+}
+
+export type AccountMetadata = {
+    targetPublicKey: string,
+    scopedMetadataKey: string,
+    valueSizeDelta: number,
+    valueSize: number,
+    value: string,
+}
+
+export type SecretLock = {
+    mosaicId: string,
+    amount: string,
+    duration: string,
+    hashAlgorithm: number,
+    secret: string,
+    recipientAddress: NEM2Address,
+}
+
+export type SecretProof = {
+    hashAlgorithm: number,
+    secret: string,
+    proof: string,
+}
+
+export type HashLock = {
+    mosaicId: string,
+    amount: string,
+    duration: string,
+    hash: string,
+}
+
+export type Aggregate = {
+    innerTransactions: Array<Transaction>,
+    cosignatures: Array<Cosignatures>,
+}
+
+export type Cosignatures = {
+    signature: string,
+    publicKey: string,
 }
 
 // get public key

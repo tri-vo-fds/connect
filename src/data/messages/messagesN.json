@@ -7468,37 +7468,44 @@
                 {
                     "rule": "optional",
                     "options": {},
+                    "type": "NEM2MosaicMetadataTransaction",
+                    "name": "mosaic_metadata",
+                    "id": 13
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "NEM2AccountMetadataTransaction",
+                    "name": "account_metadata",
+                    "id": 14
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
                     "type": "NEM2MosaicAliasTransaction",
                     "name": "mosaic_alias",
-                    "id": 13
+                    "id": 15
                 },
                 {
                     "rule": "optional",
                     "options": {},
                     "type": "NEM2HashLockTransaction",
                     "name": "hash_lock",
-                    "id": 14
+                    "id": 16
                 },
                 {
                     "rule": "optional",
                     "options": {},
                     "type": "NEM2SecretLockTransaction",
                     "name": "secret_lock",
-                    "id": 15
+                    "id": 17
                 },
                 {
                     "rule": "optional",
                     "options": {},
                     "type": "NEM2SecretProofTransaction",
                     "name": "secret_proof",
-                    "id": 16
-                },
-                {
-                    "rule": "optional",
-                    "options": {},
-                    "type": "NEM2MultisigModificationTransaction",
-                    "name": "multisig_modification",
-                    "id": 17
+                    "id": 18
                 }
             ],
             "enums": [
@@ -7542,6 +7549,14 @@
                             "id": 17220
                         },
                         {
+                            "name": "MOSAIC_METADATA",
+                            "id": 16964
+                        },
+                        {
+                            "name": "ACCOUNT_METADATA",
+                            "id": 16708
+                        },
+                        {
                             "name": "MOSAIC_ALIAS",
                             "id": 17230
                         },
@@ -7556,10 +7571,6 @@
                         {
                             "name": "SECRET_PROOF",
                             "id": 16978
-                        },
-                        {
-                            "name": "MULTISIG_MODIFICATION",
-                            "id": 16725
                         }
                     ],
                     "options": {}
@@ -8248,7 +8259,22 @@
                 },
                 {
                     "name": "NEM2Cosignature",
-                    "fields": [],
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "signature",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "public_key",
+                            "id": 2
+                        }
+                    ],
                     "enums": [],
                     "messages": [],
                     "options": {},
@@ -8306,35 +8332,93 @@
                     "oneofs": {}
                 },
                 {
-                    "name": "NEM2MultisigModificationTransaction",
+                    "name": "NEM2MosaicMetadataTransaction",
                     "fields": [
                         {
                             "rule": "optional",
                             "options": {},
-                            "type": "uint32",
-                            "name": "min_approval_delta",
+                            "type": "string",
+                            "name": "target_public_key",
                             "id": 1
                         },
                         {
                             "rule": "optional",
                             "options": {},
-                            "type": "uint32",
-                            "name": "min_removal_delta",
+                            "type": "string",
+                            "name": "scoped_metadata_key",
                             "id": 2
                         },
                         {
-                            "rule": "repeated",
+                            "rule": "optional",
                             "options": {},
                             "type": "string",
-                            "name": "public_key_additions",
+                            "name": "target_mosaic_id",
                             "id": 3
                         },
                         {
-                            "rule": "repeated",
+                            "rule": "optional",
+                            "options": {},
+                            "type": "uint32",
+                            "name": "value_size_delta",
+                            "id": 4
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "uint32",
+                            "name": "value_size",
+                            "id": 5
+                        },
+                        {
+                            "rule": "optional",
                             "options": {},
                             "type": "string",
-                            "name": "public_key_deletions",
+                            "name": "value",
+                            "id": 6
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2AccountMetadataTransaction",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "target_public_key",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "scoped_metadata_key",
+                            "id": 2
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "uint32",
+                            "name": "value_size_delta",
+                            "id": 3
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "uint32",
+                            "name": "value_size",
                             "id": 4
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "value",
+                            "id": 5
                         }
                     ],
                     "enums": [],
