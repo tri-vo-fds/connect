@@ -27,6 +27,9 @@ import type {
 import type {
     Transaction as $NEM2Transaction,
     Mosaic as $NEM2Mosaic,
+    AccountAddressRestrictionTransaction,
+    AccountMosaicRestrictionTransaction,
+    AccountOperationRestrictionTransaction,
 } from '../../../types/nem2';
 
 export const NEM2_MAINNET: number = 0x68;
@@ -434,6 +437,49 @@ const hashAggregate = (tx: $NEM2Transaction): NEM2Aggregate => {
     return {
         inner_transactions,
         cosignatures,
+    };
+};
+
+const multisigModificationMessage = (tx: $NEM2Transaction): NEM2MultisigModification => {
+    return {
+        min_approval_delta: tx.minApprovalDelta || 0,
+        min_removal_delta: tx.minRemovalDelta || 0,
+        public_key_additions: tx.publicKeyAdditions || [],
+        public_key_deletions: tx.publicKeyDeletions || [],
+    };
+};
+
+const accountAddressRestrictionMessage = (tx: AccountAddressRestrictionTransaction): NEM2AccountAddressRestrictionTransaction => {
+    return {
+        restriction_type: tx.restrictionType,
+        restriction_additions: tx.restrictionAdditions.map((addition) => {
+            return {
+                address: addition.address,
+                network_type: addition.networkType,
+            };
+        }),
+        restriction_deletions: tx.restrictionDeletions.map((addition) => {
+            return {
+                address: addition.address,
+                network_type: addition.networkType,
+            };
+        }),
+    };
+};
+
+const accountMosaicRestrictionMessage = (tx: AccountMosaicRestrictionTransaction): NEM2AccountMosaicRestrictionTransaction => {
+    return {
+        restriction_type: tx.restrictionType,
+        restriction_additions: tx.restrictionAdditions,
+        restriction_deletions: tx.restrictionDeletions,
+    };
+};
+
+const accountOperationRestrictionMessage = (tx: AccountOperationRestrictionTransaction): NEM2AccountOperationRestrictionTransaction => {
+    return {
+        restriction_type: tx.restrictionType,
+        restriction_additions: tx.restrictionAdditions,
+        restriction_deletions: tx.restrictionDeletions,
     };
 };
 

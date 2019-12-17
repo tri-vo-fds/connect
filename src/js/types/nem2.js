@@ -158,6 +158,33 @@ export type HashLock = {
     hash: string,
 }
 
+export type MultisigModification = {
+    minApprovalDelta: number,
+    minRemovalDelta: number,
+    publicKeyAdditions: string[],
+    publicKeyDeletions: string[],
+}
+
+// Define the AccountRestriction types seperately as they all need to share the same properties
+// restrictionAdditions, restrictionDeletions which differ in types between the three transactions.
+export type AccountAddressRestrictionTransaction = TransactionBase & {
+    restrictionType: number,
+    restrictionAdditions: NEM2Address[],
+    restrictionDeletions: NEM2Address[],
+}
+
+export type AccountMosaicRestrictionTransaction = TransactionBase & {
+    restrictionType: number,
+    restrictionAdditions: string[],
+    restrictionDeletions: string[],
+}
+
+export type AccountOperationRestrictionTransaction = TransactionBase & {
+    restrictionType: number,
+    restrictionAdditions: number[],
+    restrictionDeletions: number[],
+}
+
 export type Aggregate = {
     innerTransactions: Array<Transaction>,
     cosignatures: Array<Cosignatures>,
