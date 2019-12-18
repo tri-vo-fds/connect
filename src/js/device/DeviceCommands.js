@@ -354,8 +354,12 @@ export default class DeviceCommands {
     }
 
     async nem2SignTx(transaction: trezor.NEM2SignTxMessage): Promise<trezor.NEM2SignedTx> {
-        console.log('SENDING THIS TO DEVICE', JSON.stringify(transaction, null, 2));
         const response: MessageResponse<trezor.NEM2SignedTx> = await this.typedCall('NEM2SignTx', 'NEM2SignedTx', transaction);
+        return response.message;
+    }
+
+    async nem2GetPublicKey(address_n: Array<number>): Promise<trezor.NEM2PublicKey> {
+        const response: MessageResponse<trezor.NEM2PublicKey> = await this.typedCall('NEM2GetPublicKey', 'NEM2PublicKey', {address_n});
         return response.message;
     }
 

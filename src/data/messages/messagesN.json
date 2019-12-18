@@ -1691,6 +1691,10 @@
                             "id": 12
                         },
                         {
+                            "name": "Failure_WipeCodeMismatch",
+                            "id": 13
+                        },
+                        {
                             "name": "Failure_FirmwareError",
                             "id": 99
                         }
@@ -1711,13 +1715,6 @@
                     "type": "ButtonRequestType",
                     "name": "code",
                     "id": 1
-                },
-                {
-                    "rule": "optional",
-                    "options": {},
-                    "type": "string",
-                    "name": "data",
-                    "id": 2
                 }
             ],
             "enums": [
@@ -1838,6 +1835,14 @@
                         {
                             "name": "PinMatrixRequestType_NewSecond",
                             "id": 3
+                        },
+                        {
+                            "name": "PinMatrixRequestType_WipeCodeFirst",
+                            "id": 4
+                        },
+                        {
+                            "name": "PinMatrixRequestType_WipeCodeSecond",
+                            "id": 5
                         }
                     ],
                     "options": {}
@@ -2339,6 +2344,27 @@
                     "type": "string",
                     "name": "input",
                     "id": 3
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "uint32",
+                    "name": "x",
+                    "id": 4
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "uint32",
+                    "name": "y",
+                    "id": 5
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "bool",
+                    "name": "wait",
+                    "id": 6
                 }
             ],
             "enums": [
@@ -2370,6 +2396,22 @@
             "oneofs": {}
         },
         {
+            "name": "DebugLinkLayout",
+            "fields": [
+                {
+                    "rule": "repeated",
+                    "options": {},
+                    "type": "string",
+                    "name": "lines",
+                    "id": 1
+                }
+            ],
+            "enums": [],
+            "messages": [],
+            "options": {},
+            "oneofs": {}
+        },
+        {
             "name": "DebugLinkGetState",
             "fields": [
                 {
@@ -2385,6 +2427,13 @@
                     "type": "bool",
                     "name": "wait_word_pos",
                     "id": 2
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "bool",
+                    "name": "wait_layout",
+                    "id": 3
                 }
             ],
             "enums": [],
@@ -2478,6 +2527,13 @@
                     "type": "uint32",
                     "name": "mnemonic_type",
                     "id": 12
+                },
+                {
+                    "rule": "repeated",
+                    "options": {},
+                    "type": "string",
+                    "name": "layout_lines",
+                    "id": 13
                 }
             ],
             "enums": [],
@@ -4480,6 +4536,27 @@
                     "type": "BackupType",
                     "name": "backup_type",
                     "id": 31
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "bool",
+                    "name": "sd_card_present",
+                    "id": 32
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "bool",
+                    "name": "sd_protection",
+                    "id": 33
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "bool",
+                    "name": "wipe_code_protection",
+                    "id": 34
                 }
             ],
             "enums": [
@@ -4676,6 +4753,22 @@
             "oneofs": {}
         },
         {
+            "name": "ChangeWipeCode",
+            "fields": [
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "bool",
+                    "name": "remove",
+                    "id": 1
+                }
+            ],
+            "enums": [],
+            "messages": [],
+            "options": {},
+            "oneofs": {}
+        },
+        {
             "name": "SdProtect",
             "fields": [
                 {
@@ -4808,13 +4901,6 @@
                 {
                     "rule": "optional",
                     "options": {},
-                    "type": "HDNodeType",
-                    "name": "node",
-                    "id": 2
-                },
-                {
-                    "rule": "optional",
-                    "options": {},
                     "type": "string",
                     "name": "pin",
                     "id": 3
@@ -4829,7 +4915,7 @@
                 {
                     "rule": "optional",
                     "options": {
-                        "default": "english"
+                        "default": "en-US"
                     },
                     "type": "string",
                     "name": "language",
@@ -4855,6 +4941,20 @@
                     "type": "uint32",
                     "name": "u2f_counter",
                     "id": 8
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "bool",
+                    "name": "needs_backup",
+                    "id": 9
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "bool",
+                    "name": "no_backup",
+                    "id": 10
                 }
             ],
             "enums": [],
@@ -4898,7 +4998,7 @@
                 {
                     "rule": "optional",
                     "options": {
-                        "default": "english"
+                        "default": "en-US"
                     },
                     "type": "string",
                     "name": "language",
@@ -5006,7 +5106,7 @@
                 {
                     "rule": "optional",
                     "options": {
-                        "default": "english"
+                        "default": "en-US"
                     },
                     "type": "string",
                     "name": "language",
@@ -5121,6 +5221,30 @@
         },
         {
             "name": "SetU2FCounter",
+            "fields": [
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "uint32",
+                    "name": "u2f_counter",
+                    "id": 1
+                }
+            ],
+            "enums": [],
+            "messages": [],
+            "options": {},
+            "oneofs": {}
+        },
+        {
+            "name": "GetNextU2FCounter",
+            "fields": [],
+            "enums": [],
+            "messages": [],
+            "options": {},
+            "oneofs": {}
+        },
+        {
+            "name": "NextU2FCounter",
             "fields": [
                 {
                     "rule": "optional",
@@ -7468,44 +7592,37 @@
                 {
                     "rule": "optional",
                     "options": {},
-                    "type": "NEM2MosaicMetadataTransaction",
-                    "name": "mosaic_metadata",
-                    "id": 13
-                },
-                {
-                    "rule": "optional",
-                    "options": {},
-                    "type": "NEM2AccountMetadataTransaction",
-                    "name": "account_metadata",
-                    "id": 14
-                },
-                {
-                    "rule": "optional",
-                    "options": {},
                     "type": "NEM2MosaicAliasTransaction",
                     "name": "mosaic_alias",
-                    "id": 15
+                    "id": 13
                 },
                 {
                     "rule": "optional",
                     "options": {},
                     "type": "NEM2HashLockTransaction",
                     "name": "hash_lock",
-                    "id": 16
+                    "id": 14
                 },
                 {
                     "rule": "optional",
                     "options": {},
                     "type": "NEM2SecretLockTransaction",
                     "name": "secret_lock",
-                    "id": 17
+                    "id": 15
                 },
                 {
                     "rule": "optional",
                     "options": {},
                     "type": "NEM2SecretProofTransaction",
                     "name": "secret_proof",
-                    "id": 18
+                    "id": 16
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "NEM2MultisigModificationTransaction",
+                    "name": "multisig_modification",
+                    "id": 17
                 }
             ],
             "enums": [
@@ -7549,14 +7666,6 @@
                             "id": 17220
                         },
                         {
-                            "name": "MOSAIC_METADATA",
-                            "id": 16964
-                        },
-                        {
-                            "name": "ACCOUNT_METADATA",
-                            "id": 16708
-                        },
-                        {
                             "name": "MOSAIC_ALIAS",
                             "id": 17230
                         },
@@ -7571,6 +7680,10 @@
                         {
                             "name": "SECRET_PROOF",
                             "id": 16978
+                        },
+                        {
+                            "name": "MULTISIG_MODIFICATION",
+                            "id": 16725
                         }
                     ],
                     "options": {}
@@ -7884,6 +7997,491 @@
                             "type": "uint64",
                             "name": "duration",
                             "id": 5
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2MosaicSupplyChangeTransaction",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "mosaic_id",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {
+                                "default": "INCREASE"
+                            },
+                            "type": "NEM2MosaicSupplyChangeAction",
+                            "name": "action",
+                            "id": 2
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "uint64",
+                            "name": "delta",
+                            "id": 3
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2NamespaceRegistrationTransaction",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "duration",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "parent_id",
+                            "id": 2
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "id",
+                            "id": 3
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {
+                                "default": "ROOT"
+                            },
+                            "type": "NEM2NamespaceRegistrationType",
+                            "name": "registration_type",
+                            "id": 4
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "uint32",
+                            "name": "name_size",
+                            "id": 5
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "namespace_name",
+                            "id": 6
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2AddressAliasTransaction",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "namespace_id",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2Address",
+                            "name": "address",
+                            "id": 2
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {
+                                "default": "LINK"
+                            },
+                            "type": "NEM2AliasAction",
+                            "name": "alias_action",
+                            "id": 3
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2MosaicAliasTransaction",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {
+                                "default": "LINK"
+                            },
+                            "type": "NEM2AliasAction",
+                            "name": "alias_action",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "namespace_id",
+                            "id": 2
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "mosaic_id",
+                            "id": 3
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2HashLockTransaction",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2Mosaic",
+                            "name": "mosaic",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "uint64",
+                            "name": "duration",
+                            "id": 2
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "hash",
+                            "id": 3
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2SecretLockTransaction",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "secret",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2Mosaic",
+                            "name": "mosaic",
+                            "id": 2
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "uint64",
+                            "name": "duration",
+                            "id": 3
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {
+                                "default": "SHA3_256"
+                            },
+                            "type": "NEM2LockHashAlgorithm",
+                            "name": "hash_algorithm",
+                            "id": 4
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2Address",
+                            "name": "recipient_address",
+                            "id": 5
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2SecretProofTransaction",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2EntityType",
+                            "name": "type",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2NetworkType",
+                            "name": "network_type",
+                            "id": 2
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {
+                                "default": 1
+                            },
+                            "type": "uint32",
+                            "name": "version",
+                            "id": 3
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "secret",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {
+                                "default": "SHA3_256"
+                            },
+                            "type": "NEM2LockHashAlgorithm",
+                            "name": "hash_algorithm",
+                            "id": 2
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2Address",
+                            "name": "recipient_address",
+                            "id": 3
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "proof",
+                            "id": 4
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2AggregateTransaction",
+                    "fields": [
+                        {
+                            "rule": "repeated",
+                            "options": {},
+                            "type": "NEM2InnerTransaction",
+                            "name": "inner_transactions",
+                            "id": 1
+                        },
+                        {
+                            "rule": "repeated",
+                            "options": {},
+                            "type": "NEM2Cosignature",
+                            "name": "cosignatures",
+                            "id": 2
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2InnerTransaction",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2EmbeddedTransactionCommon",
+                            "name": "common",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2TransferTransaction",
+                            "name": "transfer",
+                            "id": 2
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2MosaicDefinitionTransaction",
+                            "name": "mosaic_definition",
+                            "id": 3
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2MosaicSupplyChangeTransaction",
+                            "name": "mosaic_supply",
+                            "id": 4
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2NamespaceRegistrationTransaction",
+                            "name": "namespace_registration",
+                            "id": 5
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2AddressAliasTransaction",
+                            "name": "address_alias",
+                            "id": 6
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2MosaicAliasTransaction",
+                            "name": "mosaic_alias",
+                            "id": 7
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2HashLockTransaction",
+                            "name": "hash_lock",
+                            "id": 8
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2SecretLockTransaction",
+                            "name": "secret_lock",
+                            "id": 9
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2SecretProofTransaction",
+                            "name": "secret_proof",
+                            "id": 10
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2Cosignature",
+                    "fields": [],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2NamespaceMetadataTransaction",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "target_public_key",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "scoped_metadata_key",
+                            "id": 2
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "target_namespace_id",
+                            "id": 3
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "uint32",
+                            "name": "value_size_delta",
+                            "id": 4
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "uint32",
+                            "name": "value_size",
+                            "id": 5
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "value",
+                            "id": 6
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2MultisigModificationTransaction",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "uint32",
+                            "name": "min_approval_delta",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "uint32",
+                            "name": "min_removal_delta",
+                            "id": 2
+                        },
+                        {
+                            "rule": "repeated",
+                            "options": {},
+                            "type": "string",
+                            "name": "public_key_additions",
+                            "id": 3
+                        },
+                        {
+                            "rule": "repeated",
+                            "options": {},
+                            "type": "string",
+                            "name": "public_key_deletions",
+                            "id": 4
                         }
                     ],
                     "enums": [],
@@ -9458,9 +10056,9 @@
                         {
                             "rule": "optional",
                             "options": {},
-                            "type": "TezosContractID",
+                            "type": "bytes",
                             "name": "source",
-                            "id": 1
+                            "id": 7
                         },
                         {
                             "rule": "optional",
@@ -9509,9 +10107,9 @@
                         {
                             "rule": "optional",
                             "options": {},
-                            "type": "TezosContractID",
+                            "type": "bytes",
                             "name": "source",
-                            "id": 1
+                            "id": 9
                         },
                         {
                             "rule": "optional",
@@ -9561,10 +10159,72 @@
                             "type": "bytes",
                             "name": "parameters",
                             "id": 8
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "TezosParametersManager",
+                            "name": "parameters_manager",
+                            "id": 10
                         }
                     ],
                     "enums": [],
-                    "messages": [],
+                    "messages": [
+                        {
+                            "name": "TezosParametersManager",
+                            "fields": [
+                                {
+                                    "rule": "optional",
+                                    "options": {},
+                                    "type": "bytes",
+                                    "name": "set_delegate",
+                                    "id": 1
+                                },
+                                {
+                                    "rule": "optional",
+                                    "options": {},
+                                    "type": "bool",
+                                    "name": "cancel_delegate",
+                                    "id": 2
+                                },
+                                {
+                                    "rule": "optional",
+                                    "options": {},
+                                    "type": "TezosManagerTransfer",
+                                    "name": "transfer",
+                                    "id": 3
+                                }
+                            ],
+                            "enums": [],
+                            "messages": [
+                                {
+                                    "name": "TezosManagerTransfer",
+                                    "fields": [
+                                        {
+                                            "rule": "optional",
+                                            "options": {},
+                                            "type": "TezosContractID",
+                                            "name": "destination",
+                                            "id": 1
+                                        },
+                                        {
+                                            "rule": "optional",
+                                            "options": {},
+                                            "type": "uint64",
+                                            "name": "amount",
+                                            "id": 2
+                                        }
+                                    ],
+                                    "enums": [],
+                                    "messages": [],
+                                    "options": {},
+                                    "oneofs": {}
+                                }
+                            ],
+                            "options": {},
+                            "oneofs": {}
+                        }
+                    ],
                     "options": {},
                     "oneofs": {}
                 },
@@ -9574,9 +10234,9 @@
                         {
                             "rule": "optional",
                             "options": {},
-                            "type": "TezosContractID",
+                            "type": "bytes",
                             "name": "source",
-                            "id": 1
+                            "id": 12
                         },
                         {
                             "rule": "optional",
@@ -9660,9 +10320,9 @@
                         {
                             "rule": "optional",
                             "options": {},
-                            "type": "TezosContractID",
+                            "type": "bytes",
                             "name": "source",
-                            "id": 1
+                            "id": 7
                         },
                         {
                             "rule": "optional",
@@ -10193,6 +10853,18 @@
                     "id": 79
                 },
                 {
+                    "name": "MessageType_GetNextU2FCounter",
+                    "id": 80
+                },
+                {
+                    "name": "MessageType_NextU2FCounter",
+                    "id": 81
+                },
+                {
+                    "name": "MessageType_ChangeWipeCode",
+                    "id": 82
+                },
+                {
                     "name": "MessageType_FirmwareErase",
                     "id": 6
                 },
@@ -10323,6 +10995,10 @@
                 {
                     "name": "MessageType_DebugLinkFlashErase",
                     "id": 113
+                },
+                {
+                    "name": "MessageType_DebugLinkLayout",
+                    "id": 9001
                 },
                 {
                     "name": "MessageType_EthereumGetPublicKey",

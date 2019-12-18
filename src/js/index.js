@@ -187,6 +187,10 @@ class TrezorConnect {
         return await call({ method: 'nem2SignTransaction', ...params });
     }
 
+    static nem2GetPublicKey: $T.NEM2GetPublicKey = async (params) => {
+        return await call({ method: 'nem2GetPublicKey', ...params });
+    }
+
     static pushTransaction: $T.PushTransaction = async (params) => {
         return await call({ method: 'pushTransaction', ...params });
     }
