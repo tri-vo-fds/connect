@@ -90,6 +90,10 @@ const getCommon = (tx: $NEM2Transaction): NEM2TransactionCommon => {
     };
 };
 
+function readUint32At(bytes, index) {
+    return (bytes[index] + (bytes[index + 1] << 8) + (bytes[index + 2] << 16) + (bytes[index + 3] << 24)) >>> 0;
+}
+
 const getEmbeddedCommon = (tx: $NEM2Transaction): NEM2EmbeddedTransactionCommon => {
     validateParams(tx, [
         { name: 'type', type: 'number', obligatory: true },
@@ -156,7 +160,7 @@ const mosaicDefinitionMessage = (tx: $NEM2Transaction): NEM2MosaicDefinition => 
     if (typeof tx.nonce === 'number') {
         nonce = tx.nonce;
     } else if (typeof tx.nonce === 'object' && typeof tx.nonce.nonce === 'object') {
-        nonce = parseInt('0x' + buf2hex(tx.nonce.nonce));
+        nonce = readUint32At(tx.nonce.nonce, 0);
     } else {
         throw invalidParameter('Parameter nonce has invalid type.');
     }
@@ -402,7 +406,7 @@ const toHex = (mosaicId) => {
     const part1 = mosaicId.higher.toString(16);
     const part2 = mosaicId.lower.toString(16);
     return (pad(part1, 8) + pad(part2, 8)).toUpperCase();
-}
+};
 
 /**
 * @param str
@@ -411,7 +415,7 @@ const toHex = (mosaicId) => {
 */
 const pad = (str, maxVal) => {
     return (str.length < maxVal ? this.pad(`0${str}`, maxVal) : str);
-}
+};
 
 const hashLockMessage = (tx: $NEM2Transaction): NEM2HashLock => {
     validateParams(tx, [
@@ -424,7 +428,7 @@ const hashLockMessage = (tx: $NEM2Transaction): NEM2HashLock => {
     return {
         mosaic: {
             id: toHex(tx.mosaicId),
-            amount: tx.amount
+            amount: tx.amount,
         },
         duration: tx.duration,
         hash: tx.hash,
@@ -561,8 +565,8 @@ export const createTx = (tx: $NEM2Transaction, address_n: Array<number>, generat
     if (transaction.cosigning) {
         const message: NEM2SignTxMessage = {
             address_n: address_n,
-            cosigning: transaction.cosigning
-        }
+            cosigning: transaction.cosigning,
+        };
         return message;
     }
 
