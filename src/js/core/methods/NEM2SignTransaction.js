@@ -7,7 +7,7 @@ import { getMiscNetwork } from '../../data/CoinInfo';
 import { validatePath } from '../../utils/pathUtils';
 import * as helper from './helpers/nem2SignTx';
 
-import type { NEM2SignTxMessage, NEM2SignedTx } from '../../types/trezor';
+import type { NEM2SignTxMessage, NEM2SignedTx, NEM2CosignatureSignedTx } from '../../types/trezor';
 import type { Transaction as $NEM2Transaction } from '../../types/nem2';
 import type { CoreMessage } from '../../types';
 
@@ -25,7 +25,7 @@ export default class NEM2SignTransaction extends AbstractMethod {
         // validate incoming parameters
         validateParams(payload, [
             { name: 'path', obligatory: true },
-            { name: 'generationHash', obligatory: true },
+            { name: 'generationHash', obligatory: false },
             { name: 'transaction', obligatory: true },
         ]);
 
@@ -36,7 +36,7 @@ export default class NEM2SignTransaction extends AbstractMethod {
         this.message = helper.createTx(transaction, path, generationHash);
     }
 
-    async run(): Promise<NEM2SignedTx> {
+    async run(): Promise<NEM2SignedTx | NEM2CosignatureSignedTx> {
         return await this.device.getCommands().nem2SignTx(this.message);
     }
 }

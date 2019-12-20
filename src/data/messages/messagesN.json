@@ -7543,7 +7543,7 @@
                 {
                     "rule": "optional",
                     "options": {},
-                    "type": "bool",
+                    "type": "string",
                     "name": "cosigning",
                     "id": 6
                 },
@@ -8386,6 +8386,55 @@
                             "type": "NEM2SecretProofTransaction",
                             "name": "secret_proof",
                             "id": 10
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2NamespaceMetadataTransaction",
+                            "name": "namespace_metadata",
+                            "id": 11
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2MosaicMetadataTransaction",
+                            "name": "mosaic_metadata",
+                            "id": 12
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2AccountMetadataTransaction",
+                            "name": "account_metadata",
+                            "id": 13
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2MultisigModificationTransaction",
+                            "name": "multisig_modification",
+                            "id": 14
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2AccountAddressRestrictionTransaction",
+                            "name": "account_address_restriction",
+                            "id": 15
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2AccountMosaicRestrictionTransaction",
+                            "name": "account_mosaic_restriction",
+                            "id": 16
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2AccountOperationRestrictionTransaction",
+                            "name": "account_operation_restriction",
+                            "id": 17
                         }
                     ],
                     "enums": [],
@@ -9051,6 +9100,29 @@
                     "type": "bytes",
                     "name": "signature",
                     "id": 3
+                }
+            ],
+            "enums": [],
+            "messages": [],
+            "options": {},
+            "oneofs": {}
+        },
+        {
+            "name": "NEM2CosignatureSignedTx",
+            "fields": [
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "bytes",
+                    "name": "parent_hash",
+                    "id": 1
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "bytes",
+                    "name": "signature",
+                    "id": 2
                 }
             ],
             "enums": [],
@@ -11483,6 +11555,10 @@
                 {
                     "name": "MessageType_NEM2SignedTx",
                     "id": 807
+                },
+                {
+                    "name": "MessageType_NEM2CosignatureSignedTx",
+                    "id": 808
                 }
             ],
             "options": {}

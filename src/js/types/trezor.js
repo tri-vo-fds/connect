@@ -405,7 +405,7 @@ export type NEMSignTxMessage = {
 
 export type NEM2SignTxMessage = {
     address_n: Array<number>,
-    generation_hash: string,
+    generation_hash?: string,
     transaction: NEM2TransactionCommon,
     transfer?: NEM2Transfer,
     mosaic_definition?: NEM2MosaicDefinition,
@@ -419,12 +419,22 @@ export type NEM2SignTxMessage = {
     secret_lock?: NEM2SecretLock,
     secret_proof?: NEM2SecretProof,
     hash_lock?: NEM2HashLock,
-    aggregate?: NEM2Aggregate
+    aggregate?: NEM2Aggregate,
+    multisig_modification?: NEM2MultisigModification,
+    account_address_restriction?: NEM2AccountAddressRestrictionTransaction,
+    account_mosaic_restriction?: NEM2AccountMosaicRestrictionTransaction,
+    account_operation_restriction?: NEM2AccountOperationRestrictionTransaction,
+    cosigning?: string
 }
 
 export type NEM2SignedTx = {
     payload: string,
     hash: string,
+    signature: string
+}
+
+export type NEM2CosignatureSignedTx = {
+    parent_hash: string,
     signature: string
 }
 

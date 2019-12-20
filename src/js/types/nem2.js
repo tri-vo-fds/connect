@@ -4,7 +4,7 @@
 
 import type { $Path, $Common } from './params';
 import type { Unsuccessful$ } from './response';
-import type { NEM2SignedTx } from './trezor';
+import type { NEM2SignedTx, NEM2CosignatureSignedTx } from './trezor';
 
 type Message = {
     payload: string,
@@ -68,7 +68,16 @@ export type Transaction = TransactionBase &
                             SecretLock &
                             SecretProof &
                             HashLock &
-                            Aggregate;
+                            Aggregate &
+                            MultisigModification &
+                            AccountAddressRestrictionTransaction &
+                            AccountMosaicRestrictionTransaction &
+                            AccountOperationRestrictionTransaction &
+                            Cosign;
+
+export type Cosign = {
+    cosigning: string,
+}
 
 export type Transfer = {
     recipientAddress: NEM2Address,
@@ -199,7 +208,7 @@ export type Cosignatures = {
 
 export type $NEM2Publickey = {
     path: $Path,
-    showDisplay: boolean
+    showDisplay: boolean,
 }
 
 // sign transaction
@@ -211,7 +220,7 @@ export type $NEM2SignTransaction = $Common & {
 
 export type NEM2SignTransaction$ = {
     success: true,
-    payload: NEM2SignedTx,
+    payload: NEM2SignedTx | NEM2CosignatureSignedTx,
 } | Unsuccessful$;
 
 export type NEM2Publickey$ = {
@@ -219,7 +228,7 @@ export type NEM2Publickey$ = {
     payload: {
         path: $Path,
         publicKey: string,
-        serializedPath: string
-    },    
+        serializedPath: string,
+    },
 } | Unsuccessful$;
 

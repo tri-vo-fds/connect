@@ -394,9 +394,28 @@ const secretProofMessage = (tx: $NEM2Transaction): NEM2SecretProof => {
     };
 };
 
+/**
+* Get string value of id
+* @returns {string}
+*/
+const toHex = (mosaicId) => {
+    const part1 = mosaicId.higher.toString(16);
+    const part2 = mosaicId.lower.toString(16);
+    return (pad(part1, 8) + pad(part2, 8)).toUpperCase();
+}
+
+/**
+* @param str
+* @param maxVal
+* @returns {string}
+*/
+const pad = (str, maxVal) => {
+    return (str.length < maxVal ? this.pad(`0${str}`, maxVal) : str);
+}
+
 const hashLockMessage = (tx: $NEM2Transaction): NEM2HashLock => {
     validateParams(tx, [
-        { name: 'mosaicId', type: 'string', obligatory: true },
+        { name: 'mosaicId', type: 'object', obligatory: true },
         { name: 'amount', type: 'string', obligatory: true },
         { name: 'duration', type: 'string', obligatory: true },
         { name: 'hash', type: 'string', obligatory: true },
@@ -404,8 +423,8 @@ const hashLockMessage = (tx: $NEM2Transaction): NEM2HashLock => {
 
     return {
         mosaic: {
-            id: tx.mosaicId,
-            amount: tx.amount,
+            id: toHex(tx.mosaicId),
+            amount: tx.amount
         },
         duration: tx.duration,
         hash: tx.hash,
@@ -538,6 +557,15 @@ const getTransactionBody = (transaction) => {
 
 export const createTx = (tx: $NEM2Transaction, address_n: Array<number>, generation_hash: string): NEM2SignTxMessage => {
     const transaction: $NEM2Transaction = tx;
+
+    if (transaction.cosigning) {
+        const message: NEM2SignTxMessage = {
+            address_n: address_n,
+            cosigning: transaction.cosigning
+        }
+        return message;
+    }
+
     const message: NEM2SignTxMessage = {
         address_n: address_n,
         generation_hash: generation_hash,

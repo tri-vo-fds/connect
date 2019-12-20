@@ -353,7 +353,11 @@ export default class DeviceCommands {
         return response.message;
     }
 
-    async nem2SignTx(transaction: trezor.NEM2SignTxMessage): Promise<trezor.NEM2SignedTx> {
+    async nem2SignTx(transaction: trezor.NEM2SignTxMessage): Promise<trezor.NEM2SignedTx | trezor.NEM2CosignatureSignedTx> {
+        if (transaction.cosigning) {
+            const response: MessageResponse<trezor.NEM2CosignatureSignedTx> = await this.typedCall('NEM2SignTx', 'NEM2CosignatureSignedTx', transaction);
+            return response.message;
+        }
         const response: MessageResponse<trezor.NEM2SignedTx> = await this.typedCall('NEM2SignTx', 'NEM2SignedTx', transaction);
         return response.message;
     }
