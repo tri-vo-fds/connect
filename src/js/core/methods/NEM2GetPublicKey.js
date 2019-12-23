@@ -29,7 +29,7 @@ export default class NEM2GetPublicKey extends AbstractMethod {
 
         this.requiredPermissions = ['read'];
         this.firmwareRange = getFirmwareRange(this.name, getMiscNetwork('NEM2'), this.firmwareRange);
-        this.info = 'Export NEM public key';
+        this.info = 'Export NEM2 public key';
 
         // create a bundle with only one batch if bundle doesn't exists
         this.hasBundle = message.payload.hasOwnProperty('bundle');
@@ -72,9 +72,9 @@ export default class NEM2GetPublicKey extends AbstractMethod {
 
         let label: string;
         if (this.params.length > 1) {
-            label = 'Export multiple NEM public keys';
+            label = 'Export multiple NEM2 public keys';
         } else {
-            label = `Export NEM public key for account #${ (fromHardened(this.params[0].path[2]) + 1) }`;
+            label = `Export NEM2 public key for account #${ (fromHardened(this.params[0].path[2]) + 1) }`;
         }
 
         // request confirmation view
