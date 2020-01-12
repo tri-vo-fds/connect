@@ -10,11 +10,7 @@ import * as UI from '../../constants/ui';
 import { UiMessage } from '../../message/builder';
 
 import type { NEM2PublicKey } from '../../types/trezor';
-import type {
-    $NEM2GetPublicKey,
-    $NEM2PublicKey,
-    NEM2GetPublicKeyResponse
-} from '../../types/nem2';
+import type { $NEM2PublicKey } from '../../types/nem2';
 import type { CoreMessage, UiPromiseResponse } from '../../types';
 
 type Batch = {
@@ -37,7 +33,7 @@ export default class NEM2GetPublicKey extends AbstractMethod {
         this.info = 'Export NEM2 public key';
 
         // create a bundle with only one batch if bundle doesn't exists
-        this.hasBundle = message.payload.hasOwnProperty('bundle');
+        this.hasBundle = 'bundle' in message.payload;
         const payload: Object = !this.hasBundle ? { ...message.payload, bundle: [ ...message.payload ] } : message.payload;
 
         // validate bundle type
@@ -55,7 +51,7 @@ export default class NEM2GetPublicKey extends AbstractMethod {
 
             const path: Array<number> = validatePath(batch.path, 5);
             let showOnTrezor: boolean = false;
-            if (batch.hasOwnProperty('showOnTrezor')) {
+            if ('showOnTrezor' in batch) {
                 showOnTrezor = batch.showOnTrezor;
             }
 

@@ -55,26 +55,6 @@ export type TransactionBase = {
     signerPublicKey: string, // used in inner transaction
 }
 
-export type Transaction = TransactionBase &
-                            Transfer &
-                            MosaicDefinition &
-                            MosaicSupply &
-                            NamespaceRegistration &
-                            AddressAlias &
-                            MosaicAlias &
-                            NamespaceMetadata &
-                            MosaicMetadata &
-                            AccountMetadata &
-                            SecretLock &
-                            SecretProof &
-                            HashLock &
-                            Aggregate &
-                            MultisigModification &
-                            AccountAddressRestrictionTransaction &
-                            AccountMosaicRestrictionTransaction &
-                            AccountOperationRestrictionTransaction &
-                            Cosign;
-
 export type Cosign = {
     cosigning: string,
 }
@@ -194,21 +174,14 @@ export type AccountOperationRestrictionTransaction = TransactionBase & {
     restrictionDeletions: number[],
 }
 
-export type Aggregate = {
-    innerTransactions: Array<Transaction>,
-    cosignatures: Array<Cosignatures>,
-}
-
 export type Cosignatures = {
     signature: string,
     publicKey: string,
 }
 
-// get public key
-
-export type $NEM2GetPublicKey = {
-    path: $Path,
-    showDisplay: boolean,
+export type Aggregate = {
+    transactions: Array<Object>,
+    cosignatures: Array<Cosignatures>,
 }
 
 export type $NEM2PublicKey = {
@@ -222,10 +195,35 @@ export type NEM2GetPublicKeyResponse = {
 } | Unsuccessful$;
 
 // sign transaction
+export type Transaction = TransactionBase &
+                            Transfer &
+                            MosaicDefinition &
+                            MosaicSupply &
+                            NamespaceRegistration &
+                            AddressAlias &
+                            MosaicAlias &
+                            NamespaceMetadata &
+                            MosaicMetadata &
+                            AccountMetadata &
+                            SecretLock &
+                            SecretProof &
+                            HashLock &
+                            Aggregate &
+                            MultisigModification &
+                            AccountAddressRestrictionTransaction &
+                            AccountMosaicRestrictionTransaction &
+                            AccountOperationRestrictionTransaction &
+                            Cosign;
 
 export type $NEM2SignTransaction = $Common & {
     path: $Path,
     transaction: Transaction,
+}
+// get public key
+
+export type $NEM2GetPublicKey = $Common & {
+    path: $Path,
+    showDisplay: boolean,
 }
 
 export type NEM2SignedTransaction = {

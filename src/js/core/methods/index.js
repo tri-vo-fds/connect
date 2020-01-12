@@ -42,7 +42,7 @@ import RippleSignTransaction from './RippleSignTransaction';
 import NEMGetAddress from './NEMGetAddress';
 import NEMSignTransaction from './NEMSignTransaction';
 import NEM2SignTransaction from './NEM2SignTransaction';
-import NEM2GetPublicKey from './NEM2GetPublicKey'
+import NEM2GetPublicKey from './NEM2GetPublicKey';
 import SignMessage from './SignMessage';
 import SignTransaction from './SignTransaction';
 import StellarGetAddress from './StellarGetAddress';

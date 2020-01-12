@@ -365,7 +365,7 @@ export default class DeviceCommands {
     async nem2GetPublicKey(address_n: Array<number>, showOnTrezor: boolean): Promise<trezor.NEM2PublicKey> {
         const response: MessageResponse<trezor.NEM2PublicKey> = await this.typedCall('NEM2GetPublicKey', 'NEM2PublicKey', {
             address_n,
-            showOnTrezor
+            showOnTrezor,
         });
         return response.message;
     }
@@ -631,7 +631,6 @@ export default class DeviceCommands {
 
     // Sends an async message to the opened device.
     async call(type: string, msg: Object = {}): Promise<DefaultMessageResponse> {
-        console.log(`Sending ${type}`);
         const logMessage: Object = filterForLog(type, msg);
 
         if (this.debug) {
@@ -640,23 +639,19 @@ export default class DeviceCommands {
         }
 
         try {
-            console.log(`ABout to Send ${type}`);
             this.callPromise = this.transport.call(this.sessionId, type, msg, false);
             const res: DefaultMessageResponse = await this.callPromise;
-            console.log(`Sent ${type}`);
             const logMessage = filterForLog(res.type, res.message);
             if (this.debug) {
                 // eslint-disable-next-line no-console
                 console.log('[DeviceCommands] [call] Received', res.type, logMessage);
             }
-            console.log(`res ${JSON.stringify(res)}`);
             return res;
         } catch (error) {
             if (this.debug) {
                 // eslint-disable-next-line no-console
                 console.warn('[DeviceCommands] [call] Received error', error);
             }
-            console.log({error});
             // TODO: throw trezor error
             throw error;
         }

@@ -22,6 +22,10 @@ import type {
     NEM2HashLock,
     NEM2Aggregate,
     NEM2InnerTransaction,
+    NEM2MultisigModification,
+    NEM2AccountAddressRestrictionTransaction,
+    NEM2AccountMosaicRestrictionTransaction,
+    NEM2AccountOperationRestrictionTransaction,
 } from '../../../types/trezor';
 
 import type {
@@ -69,8 +73,12 @@ export const TX_TYPES = {
     'secretLock': NEM2_SECRET_LOCK,
     'secretProof': NEM2_SECRET_PROOF,
     'hashLock': NEM2_HASH_LOCK,
-    'aggregate': NEM2_AGGREGATE_COMPLETE,
-    'aggregate': NEM2_AGGREGATE_BONDED,
+    'aggregateComplete': NEM2_AGGREGATE_COMPLETE,
+    'aggregateBonded': NEM2_AGGREGATE_BONDED,
+    'multisigModification': NEM2_MULTISIG_MODIFICATION,
+    'accountAddressRestriction': NEM2_ACCOUNT_ADDRESS_RESTRICTION,
+    'accountMosaicRestriction': NEM2_ACCOUNT_MOSAIC_RESTRICTION,
+    'accountOperationRestriction': NEM2_ACCOUNT_OPERATION_RESTRICTION,
 };
 
 const getCommon = (tx: $NEM2Transaction): NEM2TransactionCommon => {
@@ -416,34 +424,6 @@ const hashLockMessage = (tx: $NEM2Transaction): NEM2HashLock => {
     };
 };
 
-const hashAggregate = (tx: $NEM2Transaction): NEM2Aggregate => {
-    validateParams(tx, [
-        { name: 'innerTransactions', type: 'array', obligatory: true },
-        { name: 'cosignatures', type: 'array', obligatory: false },
-    ]);
-    const inner_transactions = tx.innerTransactions.map((transaction) => {
-        const inner_transaction: NEM2InnerTransaction = {
-            common: getEmbeddedCommon(transaction),
-            ...getTransactionBody(transaction),
-        };
-
-        return inner_transaction;
-    });
-
-    let cosignatures = [];
-    if ('cosignatures' in tx) {
-        cosignatures = tx.cosignatures.map(cosignature => ({
-            signature: cosignature.signature,
-            public_key: cosignature.publicKey,
-        }));
-    }
-
-    return {
-        inner_transactions,
-        cosignatures,
-    };
-};
-
 const multisigModificationMessage = (tx: $NEM2Transaction): NEM2MultisigModification => {
     return {
         min_approval_delta: tx.minApprovalDelta || 0,
@@ -484,6 +464,36 @@ const accountOperationRestrictionMessage = (tx: AccountOperationRestrictionTrans
         restriction_type: tx.restrictionType,
         restriction_additions: tx.restrictionAdditions,
         restriction_deletions: tx.restrictionDeletions,
+    };
+};
+
+const hashAggregate = (tx: $NEM2Transaction): NEM2Aggregate => {
+    validateParams(tx, [
+        { name: 'transactions', type: 'array', obligatory: true },
+        { name: 'cosignatures', type: 'array', obligatory: false, allowEmpty: true },
+    ]);
+    const inner_transactions = tx.transactions.map(({ transaction }) => {
+        const inner_transaction: NEM2InnerTransaction = {
+            common: getEmbeddedCommon(transaction),
+            // may be recursive
+            // eslint-disable-next-line no-use-before-define
+            ...getTransactionBody(transaction),
+        };
+
+        return inner_transaction;
+    });
+
+    let cosignatures = [];
+    if ('cosignatures' in tx) {
+        cosignatures = tx.cosignatures.map(cosignature => ({
+            signature: cosignature.signature,
+            public_key: cosignature.publicKey,
+        }));
+    }
+
+    return {
+        inner_transactions,
+        cosignatures,
     };
 };
 
