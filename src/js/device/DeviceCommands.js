@@ -362,8 +362,11 @@ export default class DeviceCommands {
         return response.message;
     }
 
-    async nem2GetPublicKey(address_n: Array<number>): Promise<trezor.NEM2PublicKey> {
-        const response: MessageResponse<trezor.NEM2PublicKey> = await this.typedCall('NEM2GetPublicKey', 'NEM2PublicKey', {address_n});
+    async nem2GetPublicKey(address_n: Array<number>, showOnTrezor: boolean): Promise<trezor.NEM2PublicKey> {
+        const response: MessageResponse<trezor.NEM2PublicKey> = await this.typedCall('NEM2GetPublicKey', 'NEM2PublicKey', {
+            address_n,
+            showOnTrezor
+        });
         return response.message;
     }
 

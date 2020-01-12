@@ -9,7 +9,11 @@ import { validatePath, fromHardened, getSerializedPath } from '../../utils/pathU
 import * as UI from '../../constants/ui';
 import { UiMessage } from '../../message/builder';
 
-import type { NEM2Publickey, NEM2PublicKeyResponse } from '../../types/nem2';
+import type {
+    NEM2GetPublicKey as $NEM2GetPublicKey,
+    NEM2PublicKeyResponse,
+    NEM2GetPublicKeyResponse
+} from '../../types/nem2';
 import type { CoreMessage, UiPromiseResponse } from '../../types';
 
 type Batch = {
@@ -90,16 +94,16 @@ export default class NEM2GetPublicKey extends AbstractMethod {
         return this.confirmed;
     }
 
-    async run(): Promise<NEM2PublicKey$ | Array<NEM2PublicKey$>> {
+    async run(): Promise<NEM2PublicKeyResponse | Array<NEM2PublicKeyResponse>> {
         const responses: Array<NEM2PublicKeyResponse> = [];
         for (let i = 0; i < this.params.length; i++) {
             const batch: Batch = this.params[i];
-            const response: NEM2PublicKey$ = await this.device.getCommands().nem2GetPublicKey(
+            const response: NEM2PublicKeyResponse = await this.device.getCommands().nem2GetPublicKey(
                 batch.path,
                 batch.showOnTrezor
             );
             responses.push({
-                publicKey: response.public_key,
+                publicKey: response.publicKey,
                 path: batch.path,
                 serializedPath: getSerializedPath(batch.path),
             });

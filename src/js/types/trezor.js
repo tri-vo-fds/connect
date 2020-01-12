@@ -402,11 +402,16 @@ export type NEMSignTxMessage = {
 // NEM2 types
 
 // TODO: public key
+export type NEM = {
+    payload: string,
+    hash: string,
+    signature: string
+}
 
 export type NEM2SignTxMessage = {
     address_n: Array<number>,
     generation_hash?: string,
-    transaction: NEM2TransactionCommon,
+    transaction?: NEM2TransactionCommon,
     transfer?: NEM2Transfer,
     mosaic_definition?: NEM2MosaicDefinition,
     mosaic_supply?: NEM2MosaicSupply,
@@ -461,11 +466,12 @@ export type NEM2Mosaic = {
     amount: string
 }
 
-export type NetworkType =
+export type NEM2NetworkType = {
     104 // MAIN_NET
   | 152 // TEST_NET
   | 96 // MIJIN
   | 144 // MIJIN_TEST
+}
 
 export type NEM2Address = {
     address: String,
