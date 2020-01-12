@@ -206,24 +206,24 @@ export type Cosignatures = {
 
 // get public key
 
-export type NEM2GetPublicKey = {
+export type $NEM2GetPublicKey = {
     path: $Path,
     showDisplay: boolean,
 }
 
-export type NEM2PublicKeyResponse = {
+export type $NEM2PublicKey = {
     path: $Path,
     publicKey: string,
     serializedPath: string,
 }
 export type NEM2GetPublicKeyResponse = {
     success: true,
-    payload: NEM2PublicKeyResponse | Array<NEM2PublicKeyResponse>,
+    payload: $NEM2PublicKey | Array<$NEM2PublicKey>,
 } | Unsuccessful$;
 
 // sign transaction
 
-export type NEM2SignTransaction = $Common & {
+export type $NEM2SignTransaction = $Common & {
     path: $Path,
     transaction: Transaction,
 }

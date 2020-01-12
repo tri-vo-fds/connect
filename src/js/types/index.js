@@ -272,9 +272,9 @@ export type NEMGetAddress = typeof F_NEMGetAddress;
 
 export type NEMSignTransaction = (NEM.$NEMSignTransaction) => Promise<NEM.NEMSignTransaction$>;
 
-export type NEM2SignTransaction = (NEM2.$NEM2SignTransaction) => Promise<NEM2.NEM2SignTransaction$>;
+export type NEM2SignTransaction = (NEM2.$NEM2SignTransaction) => Promise<NEM2.NEM2SignedTransaction>;
 
-export type NEM2GetPublicKey = (NEM2.$NEM2GetPublicKey) => Promise<NEM2.NEM2GetPublicKey$>;
+export type NEM2GetPublicKey = (NEM2.$NEM2GetPublicKey) => Promise<NEM2.NEM2GetPublicKeyResponse>;
 
 export type PushTransaction = (P.$PushTransaction) => Promise<R.PushTransaction$>;
 
