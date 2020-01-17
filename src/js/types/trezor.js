@@ -604,6 +604,30 @@ export type NEM2Aggregate = {
     cosignatures?: Array<NEM2Cosignatures>,
 }
 
+export type NEM2AccountLinkTransaction = {
+    remote_public_key: string,
+    link_action: number,
+}
+
+export type NEM2MosaicGlobalRestrictionTransaction = {
+    mosaic_id: string,
+    reference_mosaic_id?: string,
+    restriction_key: string,    
+    previous_restriction_value: string,
+    new_restriction_value: string,
+    previous_restriction_type: string,
+    new_restriction_type: string
+}
+
+export type NEM2MosaicAddressRestrictionTransaction = {
+    mosaic_id: string,
+    restriction_key: string,
+    previous_restriction_value?: string,
+    new_restriction_value: string,
+    target_address: NEM2Address
+}
+
+
 export type NEM2SignTxMessage = {
     address_n: Array<number>,
     generation_hash?: string,

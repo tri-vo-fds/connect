@@ -26,6 +26,9 @@ import type {
     NEM2AccountAddressRestrictionTransaction,
     NEM2AccountMosaicRestrictionTransaction,
     NEM2AccountOperationRestrictionTransaction,
+    NEM2AccountLinkTransaction,
+    NEM2MosaicGlobalRestrictionTransaction,
+    NEM2MosaicAddressRestrictionTransaction,
 } from '../../../types/trezor';
 
 import type {
@@ -60,6 +63,13 @@ export const NEM2_SECRET_PROOF: number = 0x4252;
 export const NEM2_HASH_LOCK: number = 0x4148;
 export const NEM2_AGGREGATE_COMPLETE: number = 0x4141;
 export const NEM2_AGGREGATE_BONDED: number = 0x4241;
+export const NEM2_MULTISIG_MODIFICATION: number = 0x4155;
+export const NEM2_ACCOUNT_ADDRESS_RESTRICTION: number = 0x4150;
+export const NEM2_ACCOUNT_MOSAIC_RESTRICTION: number = 0x4250;
+export const NEM2_ACCOUNT_OPERATION_RESTRICTION: number = 0x4350;
+export const NEM2_TRANSACTION_TYPE_ACCOUNT_LINK: number = 0x414C;
+export const NEM2_TRANSACTION_TYPE_MOSAIC_GLOBAL_RESTRICTION: number = 0x4151;
+export const NEM2_TRANSACTION_TYPE_MOSAIC_ADDRESS_RESTRICTION: number = 0x4251;
 
 export const TX_TYPES = {
     'transfer': NEM2_TRANSFER,
@@ -79,6 +89,9 @@ export const TX_TYPES = {
     'accountAddressRestriction': NEM2_ACCOUNT_ADDRESS_RESTRICTION,
     'accountMosaicRestriction': NEM2_ACCOUNT_MOSAIC_RESTRICTION,
     'accountOperationRestriction': NEM2_ACCOUNT_OPERATION_RESTRICTION,
+    'accountLink': NEM2_TRANSACTION_TYPE_ACCOUNT_LINK,
+    'mosaicGlobalRestriction': NEM2_TRANSACTION_TYPE_MOSAIC_GLOBAL_RESTRICTION,
+    'mosaicAddressRestriction': NEM2_TRANSACTION_TYPE_MOSAIC_ADDRESS_RESTRICTION,
 };
 
 const getCommon = (tx: $NEM2Transaction): NEM2TransactionCommon => {
@@ -497,6 +510,64 @@ const hashAggregate = (tx: $NEM2Transaction): NEM2Aggregate => {
     };
 };
 
+const accountLink = (tx: $NEM2Transaction): NEM2AccountLinkTransaction => {
+    validateParams(tx, [
+        { name: 'remotePublicKey', type: 'string', obligatory: true },
+        { name: 'linkAction', type: 'number', obligatory: true },
+    ]);
+    return {
+        remote_public_key: tx.remotePublicKey,
+        link_action: tx.linkAction,
+    };
+};
+
+const mosaicGlobalRestriction = (tx: $NEM2Transaction): NEM2MosaicGlobalRestrictionTransaction => {
+    validateParams(tx, [
+        { name: 'mosaicId', type: 'string', obligatory: true },
+        { name: 'referenceMosaicId', type: 'string', obligatory: false },
+        { name: 'restrictionKey', type: 'string', obligatory: true },
+        { name: 'previousRestrictionValue', type: 'string', obligatory: true },
+        { name: 'newRestrictionValue', type: 'string', obligatory: true },
+        { name: 'previousRestrictionType', type: 'number', obligatory: true },
+        { name: 'newRestrictionType', type: 'number', obligatory: true },
+    ]);
+    return {
+        mosaic_id: tx.mosaicId,
+        reference_mosaic_id: tx.referenceMosaicId,
+        restriction_key: tx.restrictionKey,
+        previous_restriction_value: tx.previousRestrictionValue,
+        new_restriction_value: tx.newRestrictionValue,
+        previous_restriction_type: tx.previousRestrictionType,
+        new_restriction_type: tx.newRestrictionType,
+    };
+};
+
+const mosaicAddressRestriction = (tx: $NEM2Transaction): NEM2MosaicAddressRestrictionTransaction => {
+    validateParams(tx, [
+        { name: 'mosaicId', type: 'string', obligatory: true },
+        { name: 'restrictionKey', type: 'string', obligatory: true },
+        { name: 'previousRestrictionValue', type: 'string', obligatory: false },
+        { name: 'newRestrictionValue', type: 'string', obligatory: true },
+        { name: 'targetAddress', type: 'object', obligatory: true },
+    ]);
+
+    validateParams(tx.targetAddress, [
+        { name: 'address', type: 'string', obligatory: true },
+        { name: 'networkType', type: 'number', obligatory: true },
+    ]);
+
+    return {
+        mosaic_id: tx.mosaicId,
+        restriction_key: tx.restrictionKey,
+        previous_restriction_value: tx.previousRestrictionValue,
+        new_restriction_value: tx.newRestrictionValue,
+        target_address: {
+            address: tx.targetAddress.address,
+            network_type: tx.targetAddress.networkType,
+        },
+    };
+};
+
 const getTransactionBody = (transaction) => {
     const message = {};
     switch (transaction.type) {
@@ -542,7 +613,27 @@ const getTransactionBody = (transaction) => {
         case NEM2_AGGREGATE_BONDED:
             message.aggregate = hashAggregate(transaction);
             break;
-
+        case NEM2_MULTISIG_MODIFICATION:
+            message.multisig_modification = multisigModificationMessage(transaction);
+            break;
+        case NEM2_ACCOUNT_ADDRESS_RESTRICTION:
+            message.account_address_restriction = accountAddressRestrictionMessage(transaction);
+            break;
+        case NEM2_ACCOUNT_MOSAIC_RESTRICTION:
+            message.account_mosaic_restriction = accountMosaicRestrictionMessage(transaction);
+            break;
+        case NEM2_ACCOUNT_OPERATION_RESTRICTION:
+            message.account_operation_restriction = accountOperationRestrictionMessage(transaction);
+            break;
+        case NEM2_TRANSACTION_TYPE_ACCOUNT_LINK:
+            message.account_link = accountLink(transaction);
+            break;
+        case NEM2_TRANSACTION_TYPE_MOSAIC_GLOBAL_RESTRICTION:
+            message.mosaic_global_restriction = mosaicGlobalRestriction(transaction);
+            break;
+        case NEM2_TRANSACTION_TYPE_MOSAIC_ADDRESS_RESTRICTION:
+            message.mosaic_address_restriction = mosaicAddressRestriction(transaction);
+            break;
         default:
             throw new Error(`Unknown transaction type: ${transaction.type}`);
     }

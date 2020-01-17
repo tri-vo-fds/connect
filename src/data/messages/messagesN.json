@@ -7622,7 +7622,49 @@
                     "options": {},
                     "type": "NEM2MultisigModificationTransaction",
                     "name": "multisig_modification",
-                    "id": 17
+                    "id": 19
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "NEM2AccountAddressRestrictionTransaction",
+                    "name": "account_address_restriction",
+                    "id": 21
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "NEM2AccountMosaicRestrictionTransaction",
+                    "name": "account_mosaic_restriction",
+                    "id": 22
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "NEM2AccountOperationRestrictionTransaction",
+                    "name": "account_operation_restriction",
+                    "id": 23
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "NEM2AccountLinkTransaction",
+                    "name": "account_link",
+                    "id": 24
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "NEM2MosaicGlobalRestrictionTransaction",
+                    "name": "mosaic_global_restriction",
+                    "id": 25
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "NEM2MosaicAddressRestrictionTransaction",
+                    "name": "mosaic_address_restriction",
+                    "id": 26
                 }
             ],
             "enums": [
@@ -7684,6 +7726,30 @@
                         {
                             "name": "MULTISIG_MODIFICATION",
                             "id": 16725
+                        },
+                        {
+                            "name": "ACCOUNT_ADDRESS_RESTRICTION",
+                            "id": 16720
+                        },
+                        {
+                            "name": "ACCOUNT_MOSAIC_RESTRICTION",
+                            "id": 16976
+                        },
+                        {
+                            "name": "ACCOUNT_OPERATION_RESTRICTION",
+                            "id": 17232
+                        },
+                        {
+                            "name": "ACCOUNT_LINK",
+                            "id": 16716
+                        },
+                        {
+                            "name": "MOSAIC_GLOBAL_RESTRICTION",
+                            "id": 16721
+                        },
+                        {
+                            "name": "MOSAIC_ADDRESS_RESTRICTION",
+                            "id": 16977
                         }
                     ],
                     "options": {}
@@ -8435,6 +8501,27 @@
                             "type": "NEM2AccountOperationRestrictionTransaction",
                             "name": "account_operation_restriction",
                             "id": 17
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2AccountLinkTransaction",
+                            "name": "account_link",
+                            "id": 18
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2MosaicGlobalRestrictionTransaction",
+                            "name": "mosaic_global_restriction",
+                            "id": 19
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2MosaicAddressRestrictionTransaction",
+                            "name": "mosaic_address_restriction",
+                            "id": 20
                         }
                     ],
                     "enums": [],
@@ -9065,6 +9152,131 @@
                             "options": {},
                             "type": "string",
                             "name": "value",
+                            "id": 5
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2AccountLinkTransaction",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "remote_public_key",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "uint32",
+                            "name": "link_action",
+                            "id": 2
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2MosaicGlobalRestrictionTransaction",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "mosaic_id",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "reference_mosaic_id",
+                            "id": 2
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "restriction_key",
+                            "id": 3
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "previous_restriction_value",
+                            "id": 4
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "new_restriction_value",
+                            "id": 5
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "uint32",
+                            "name": "previous_restriction_type",
+                            "id": 6
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "uint32",
+                            "name": "new_restriction_type",
+                            "id": 7
+                        }
+                    ],
+                    "enums": [],
+                    "messages": [],
+                    "options": {},
+                    "oneofs": {}
+                },
+                {
+                    "name": "NEM2MosaicAddressRestrictionTransaction",
+                    "fields": [
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "mosaic_id",
+                            "id": 1
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "restriction_key",
+                            "id": 2
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "previous_restriction_value",
+                            "id": 3
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "string",
+                            "name": "new_restriction_value",
+                            "id": 4
+                        },
+                        {
+                            "rule": "optional",
+                            "options": {},
+                            "type": "NEM2Address",
+                            "name": "target_address",
                             "id": 5
                         }
                     ],
@@ -11137,26 +11349,6 @@
                     "id": 76
                 },
                 {
-                    "name": "MessageType_NEM2GetPublicKey",
-                    "id": 77
-                },
-                {
-                    "name": "MessageType_NEM2PublicKey",
-                    "id": 78
-                },
-                {
-                    "name": "MessageType_NEM2SignTx",
-                    "id": 79
-                },
-                {
-                    "name": "MessageType_NEM2SignedTx",
-                    "id": 80
-                },
-                {
-                    "name": "MessageType_NEM2CosignatureSignedTx",
-                    "id": 81
-                },
-                {
                     "name": "MessageType_LiskGetAddress",
                     "id": 114
                 },
@@ -11559,6 +11751,22 @@
                 {
                     "name": "MessageType_WebAuthnRemoveResidentCredential",
                     "id": 803
+                },
+                {
+                    "name": "MessageType_NEM2GetPublicKey",
+                    "id": 804
+                },
+                {
+                    "name": "MessageType_NEM2PublicKey",
+                    "id": 805
+                },
+                {
+                    "name": "MessageType_NEM2SignTx",
+                    "id": 806
+                },
+                {
+                    "name": "MessageType_NEM2SignedTx",
+                    "id": 807
                 }
             ],
             "options": {}
