@@ -370,6 +370,16 @@ export default class DeviceCommands {
         return response.message;
     }
 
+    async nem2EncryptMessage(messageData: trezor.NEM2EncryptMessage): Promise<trezor.NEM2EncryptedMessage> {
+        const response: MessageResponse<trezor.NEM2EncryptedMessage> = await this.typedCall('NEM2EncryptMessage', 'NEM2EncryptedMessage', messageData);
+        return response.message;
+    }
+
+    async nem2DecryptMessage(messageData: trezor.NEM2DecryptMessage): Promise<trezor.NEM2DecryptedMessage> {
+        const response: MessageResponse<trezor.NEM2DecryptedMessage> = await this.typedCall('NEM2DecryptMessage', 'NEM2DecryptedMessage', messageData);
+        return response.message;
+    }
+
     // Ripple: begin
     async rippleGetAddress(address_n: Array<number>, showOnTrezor: boolean): Promise<trezor.RippleAddress> {
         const response: MessageResponse<trezor.RippleAddress> = await this.typedCall('RippleGetAddress', 'RippleAddress', {

@@ -276,6 +276,10 @@ export type NEM2SignTransaction = (NEM2.$NEM2SignTransaction) => Promise<NEM2.NE
 
 export type NEM2GetPublicKey = (NEM2.$NEM2GetPublicKey) => Promise<NEM2.NEM2GetPublicKeyResponse>;
 
+export type NEM2EncryptMessage = (NEM2.$NEM2EncryptMessage) => Promise<NEM2.NEM2EncryptedMessage>;
+
+export type NEM2DecryptMessage = (NEM2.$NEM2DecryptMessage) => Promise<NEM2.NEM2DecryptedMessage>;
+
 export type PushTransaction = (P.$PushTransaction) => Promise<R.PushTransaction$>;
 
 declare function F_RippleGetAddress(params: (P.$Common & RIPPLE.$RippleGetAddress)): Promise<RIPPLE.RippleGetAddress$>;

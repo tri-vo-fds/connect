@@ -167,6 +167,7 @@ export type AccountAddressRestrictionTransaction = TransactionBase & {
     restrictionType: number,
     restrictionAdditions: NEM2Address[],
     restrictionDeletions: NEM2Address[],
+    // targetAddress: NEM2Address,
 }
 
 export type AccountMosaicRestrictionTransaction = TransactionBase & {
@@ -179,6 +180,7 @@ export type AccountOperationRestrictionTransaction = TransactionBase & {
     restrictionType: number,
     restrictionAdditions: number[],
     restrictionDeletions: number[],
+    // targetAddress: NEM2Address,
 }
 
 export type Cosignatures = {
@@ -239,11 +241,14 @@ export type Transaction = TransactionBase &
                             SecretProof &
                             HashLock &
                             Aggregate &
+                            AccountLinkTransaction &
                             MultisigModification &
                             AccountAddressRestrictionTransaction &
                             AccountMosaicRestrictionTransaction &
                             AccountOperationRestrictionTransaction &
-                            Cosign;
+                            Cosign &
+                            MosaicGlobalRestrictionTransaction &
+                            MosaicAddressRestrictionTransaction
 
 export type $NEM2SignTransaction = $Common & {
     path: $Path,
@@ -261,3 +266,20 @@ export type NEM2SignedTransaction = {
     payload: NEM2SignedTx | NEM2CosignatureSignedTx,
 } | Unsuccessful$;
 
+export type $NEM2EncryptMessage = $Common & {
+    recipientPublicKey: string, // Public key of message recipient
+    payload: string,
+}
+
+export type NEM2EncryptedMessage = {
+    payload: string,
+} | Unsuccessful$;
+
+export type $NEM2DecryptMessage = $Common & {
+    senderPublicKey: string, // Public key of message encrypter
+    payload: string,
+}
+
+export type NEM2DecryptedMessage = {
+    payload: string,
+} | Unsuccessful$;

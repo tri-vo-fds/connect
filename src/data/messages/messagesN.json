@@ -7464,6 +7464,98 @@
             "oneofs": {}
         },
         {
+            "name": "NEM2EncryptMessage",
+            "fields": [
+                {
+                    "rule": "repeated",
+                    "options": {},
+                    "type": "uint32",
+                    "name": "address_n",
+                    "id": 1
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "string",
+                    "name": "recipient_public_key",
+                    "id": 2
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "string",
+                    "name": "payload",
+                    "id": 3
+                }
+            ],
+            "enums": [],
+            "messages": [],
+            "options": {},
+            "oneofs": {}
+        },
+        {
+            "name": "NEM2EncryptedMessage",
+            "fields": [
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "bytes",
+                    "name": "payload",
+                    "id": 1
+                }
+            ],
+            "enums": [],
+            "messages": [],
+            "options": {},
+            "oneofs": {}
+        },
+        {
+            "name": "NEM2DecryptMessage",
+            "fields": [
+                {
+                    "rule": "repeated",
+                    "options": {},
+                    "type": "uint32",
+                    "name": "address_n",
+                    "id": 1
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "string",
+                    "name": "sender_public_key",
+                    "id": 2
+                },
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "string",
+                    "name": "payload",
+                    "id": 3
+                }
+            ],
+            "enums": [],
+            "messages": [],
+            "options": {},
+            "oneofs": {}
+        },
+        {
+            "name": "NEM2DecryptedMessage",
+            "fields": [
+                {
+                    "rule": "optional",
+                    "options": {},
+                    "type": "bytes",
+                    "name": "payload",
+                    "id": 1
+                }
+            ],
+            "enums": [],
+            "messages": [],
+            "options": {},
+            "oneofs": {}
+        },
+        {
             "name": "NEM2GetPublicKey",
             "fields": [
                 {
@@ -11767,6 +11859,26 @@
                 {
                     "name": "MessageType_NEM2SignedTx",
                     "id": 807
+                },
+                {
+                    "name": "MessageType_NEM2CosignatureSignedTx",
+                    "id": 808
+                },
+                {
+                    "name": "MessageType_NEM2EncryptMessage",
+                    "id": 809
+                },
+                {
+                    "name": "MessageType_NEM2EncryptedMessage",
+                    "id": 810
+                },
+                {
+                    "name": "MessageType_NEM2DecryptMessage",
+                    "id": 811
+                },
+                {
+                    "name": "MessageType_NEM2DecryptedMessage",
+                    "id": 812
                 }
             ],
             "options": {}

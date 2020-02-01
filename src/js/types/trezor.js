@@ -401,13 +401,6 @@ export type NEMSignTxMessage = {
 
 // NEM2 types
 
-// TODO: public key
-export type NEM = {
-    payload: string,
-    hash: string,
-    signature: string,
-}
-
 export type NEM2SignedTx = {
     payload: string,
     hash: string,
@@ -612,11 +605,11 @@ export type NEM2AccountLinkTransaction = {
 export type NEM2MosaicGlobalRestrictionTransaction = {
     mosaic_id: string,
     reference_mosaic_id?: string,
-    restriction_key: string,    
+    restriction_key: string,
     previous_restriction_value: string,
     new_restriction_value: string,
     previous_restriction_type: string,
-    new_restriction_type: string
+    new_restriction_type: string,
 }
 
 export type NEM2MosaicAddressRestrictionTransaction = {
@@ -624,9 +617,8 @@ export type NEM2MosaicAddressRestrictionTransaction = {
     restriction_key: string,
     previous_restriction_value?: string,
     new_restriction_value: string,
-    target_address: NEM2Address
+    target_address: NEM2Address,
 }
-
 
 export type NEM2SignTxMessage = {
     address_n: Array<number>,
@@ -652,6 +644,25 @@ export type NEM2SignTxMessage = {
     cosigning?: string,
 }
 
+export type NEM2EncryptMessage = {
+    address_n: Array<number>,
+    recipient_public_key: string, // Public key of message recipient
+    payload: string,
+}
+
+export type NEM2EncryptedMessage = {
+    payload: string,
+}
+
+export type NEM2DecryptMessage = {
+    address_n: Array<number>,
+    sender_public_key: string, // Public key of message encrypter
+    payload: string,
+}
+
+export type NEM2DecryptedMessage = {
+    payload: string,
+}
 // Stellar types
 
 export type StellarAddress = {
